@@ -1,6 +1,6 @@
 # Fancy-Git
 
-Fancy-Git a a minimalist git explorer
+Fancy-Git is (or will be) a minimalist git explorer
 =======================
 
 **Work in progress**
