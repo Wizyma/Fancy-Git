@@ -52,12 +52,12 @@ export const PopularP = styled.p `
 
 export const PopularStars = styled.div `
     position: absolute;
-    margin-left: 245px;
+    margin-left: 242px;
     margin-top: -25px;
     display: grid;
     text-align: right;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
 `
 
 export const PopularButton = styled(Link) `

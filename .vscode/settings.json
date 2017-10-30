@@ -1,4 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "tslint.autoFixOnSave": true
+    "git.ignoreLimitWarning": true
 }

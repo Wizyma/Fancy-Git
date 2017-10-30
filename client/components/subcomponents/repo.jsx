@@ -4,23 +4,10 @@ import { BackButton } from '../../styles/globals'
 
 
 
-interface RepoProps extends React.Props<any> {
-  history: {
-    goBack: React.Props<History>|undefined,
-  },
-  location: {
-    state: object,
-  }
-}
-  
-interface RepoState {
-  repo: object
-}
 
-export class Repo extends React.Component<RepoProps, RepoState> {
-  private goBack: React.Props<History>|any
+export class Repo extends React.Component {
 
-  constructor(props: RepoProps) {
+  constructor(props) {
     super(props)
 
     this.state = {

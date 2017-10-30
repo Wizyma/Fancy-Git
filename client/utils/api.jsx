@@ -1,7 +1,7 @@
-import axios, { AxiosPromise, AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 
 class GitAPI {
-  getRepositories(language: string|null): Promise<any> {
+  getRepositories(language = null) {
     let uri = encodeURI(`https://api.github.com/search/repositories?q=stars:>=15000&sort=stars&order=desc&types=Repositories`)
     if (language) {
       uri = encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&types=Repositories`) 

@@ -1,30 +1,16 @@
-import * as React from 'react'
+import  React from 'react'
 import { PopularDiv, PopularElem, Img, PopularTitle, PopularName, PopularP, PopularStars , PopularButton, PopularRank } from '../../styles/popular_styles'
-import * as ReactTooltip from 'react-tooltip' 
+import ReactTooltip from 'react-tooltip' 
 const emoji = require('node-emoji')
 
-/**
- * data and callback definition
- * 
- * @interface Build
- */
-interface Build {
-  data: object[],
-  url: string
-}
 
-/**
- * construct the view for the github data fetched
- * 
- * @param {Build['fetched']} fetched array of object containing github info
- * @returns JSX element
- */
-export const BuildPopular = (fetched: Build) => {
-  const data: Build['data'] = fetched.data
+
+export const BuildPopular = (fetched) => {
+  const data = fetched.data
   return(
       <PopularDiv>
           <PopularTitle>Most popular repos on GitHub</PopularTitle>
-          {data.map((elem: object|any, i: number) => {
+          {data.map((elem, i) => {
             return(
                   <PopularElem key={i}>
                       <PopularRank>{emoji.emojify(':medal:')} {i + 1}</PopularRank>
