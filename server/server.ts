@@ -2,6 +2,7 @@ import * as express from 'express'
 import * as path from 'path'
 import * as bodyParser from 'body-parser'
 import * as logger from 'morgan'
+import { Main } from './routes/main'
 // import * as cookieParser from 'cookie-parser' use later
 
 
@@ -31,6 +32,7 @@ export class Server {
     console.log(this.app)
     this.config()
 
+    this.router()
     this.app.use(this.notFoundMiddleware)
   }
 
@@ -60,7 +62,10 @@ export class Server {
   public router () {
     const router = express.Router()
 
-    this.app.use(router)
+    Main.connect(router)
+    const init = Main.initRoutes()
+    const mainRoutes = init(router, Main.routes)
+    this.app.use(mainRoutes)
   }
 
   /**
