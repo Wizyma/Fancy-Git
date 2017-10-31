@@ -29,7 +29,7 @@ export class Server {
     this.options = { ...defaults, ...options }
 
     this.app = express()
-    console.log(this.app)
+
     this.config()
 
     this.router()
@@ -62,9 +62,9 @@ export class Server {
   public router () {
     const router = express.Router()
 
-    Main.connect(router)
-    const init = Main.initRoutes()
-    const mainRoutes = init(router, Main.routes)
+    // main routes
+    const main = new Main()
+    const mainRoutes = Main.connect(router, main)
     this.app.use(mainRoutes)
   }
 
@@ -83,6 +83,6 @@ export class Server {
     next: express.NextFunction,
   ) {
     res.statusCode = 404
-    res.end('Not found!!')
+    res.sendFile(path.resolve(__dirname, 'template/notfound.html'))
   }
 }

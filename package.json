@@ -7,7 +7,8 @@
     "ts-electron": "tsc --p ./electron/tsconfig.json",
     "desk": "electron ./dist-desktop/init.js",
     "dev-build": "webpack",
-    "start:dev": "webpack-dev-server"
+    "start:dev": "webpack-dev-server",
+    "start:server": "nodemon --watch ./server/boot.ts --exec ts-node ./server/boot.ts"
   },
   "author": "André Gomes",
   "license": "ISC",
