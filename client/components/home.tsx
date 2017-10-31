@@ -33,9 +33,9 @@ export class Home extends React.Component <Props[], State> {
   }
 
   componentDidMount() {
-    api.getRepositories(null)
-      .then((items) => {
-        this.setState({ data: items })
+    api.getPopularRepositories()
+      .then((res) => {
+        this.setState({ data: res })
       })
   }
 
