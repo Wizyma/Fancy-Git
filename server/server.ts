@@ -3,7 +3,9 @@ import * as path from 'path'
 import * as bodyParser from 'body-parser'
 import * as logger from 'morgan'
 import { Main } from './routes/main'
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 // import * as cookieParser from 'cookie-parser' use later
+const schema = require('./graphql/schemas')
 
 
 interface ServerOptions {
@@ -31,9 +33,6 @@ export class Server {
     this.app = express()
 
     this.config()
-
-    this.router()
-    this.app.use(this.notFoundMiddleware)
   }
 
   /**
@@ -41,11 +40,21 @@ export class Server {
    * 
    * @memberof Server
    */
-  public config () {
+  private config () {
     this.app.use(logger('dev'))
 
+    
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded())
+    this.router()
+    this.app.use('/graphql', graphqlExpress({ schema }))
+    
+    if (this.app.get('env') === 'development') {
+      this.app.use('/graphiql', graphiqlExpress({
+        endpointURL: '/graphql',
+      }))
+    }
+    this.app.use(this.notFoundMiddleware)
   }
 
   /**

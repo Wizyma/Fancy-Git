@@ -1,16 +1,19 @@
 import { BaseController, Route } from './base'
 import { Router } from 'express'
-
+import axios from 'axios'
+import * as path from 'path'
 
 // test class for toutes
 export class Main extends BaseController {
 
   static routes: Route[] = [
-    { verb: 'get', path: '/', action: 'index' },
-    { verb: 'post', path: '/post', action: 'create' },
+    { verb: 'get', path: '/token', action: 'index' },
   ]
   
   private index = (req, res) => {
-    res.end('Voila')
+    const config_path = path.join(process.cwd(), 'config.json')
+    const config = require(config_path)
+
+    res.json({ token: config.token })
   }
 }
