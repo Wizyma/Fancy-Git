@@ -18,7 +18,7 @@ If you wish to run the app with electron please start first the client and the s
 
 >To fix typescript graphql error add these two interface in
 >
->node_modules/@types/graphql/subcri
+>node_modules/@types/graphql/subscription/subscribe.d.ts
 
 ```javascript
 interface AsyncIterator<T> {
