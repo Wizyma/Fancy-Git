@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { PopularDiv, PopularElem, Img, PopularTitle, PopularName, PopularP, PopularStars , PopularButton, PopularRank } from '../../styles/popular_styles'
 import * as ReactTooltip from 'react-tooltip' 
+import { PopularDiv, PopularElem, Img, PopularTitle, PopularName, PopularP, PopularStars , PopularButton, PopularRank } from '../../styles/popular_styles'
 const emoji = require('node-emoji')
 
 

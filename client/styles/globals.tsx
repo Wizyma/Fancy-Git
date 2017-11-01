@@ -50,8 +50,8 @@ background-color: #fbfbfb;
 border: 1px solid;
 border-radius: 15px;
 font-weight: 700;
-float: right;
-margin-right: -25px;
+position: absolute;
+right: 105px;
     &:hover {
         background-color: #f9f3f3;
         cursor: pointer;
@@ -68,3 +68,18 @@ export const MainDiv = styled.div `
     display: flex;
     font-family: 'Roboto', Tahoma, sans-serif;
 ` 
+
+export const SearchButton = styled.button `
+    position: absolute;
+    right: 70px;
+    top: 30px;
+    border: 1px solid;
+    width: 125px;
+    text-align: center;
+    padding: 7px;
+    background-color: white;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+`

@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { api } from '../utils/api'
 import { Loading } from './loading'
-import { Repo } from './subcomponents/repo'
 import { BuildPopular } from './subcomponents/popular_grid'
-
+import { SearchButton } from '../styles/globals'
+import { Search } from './search'
 
 export interface State {
-  data?: object[]
+  data?: object[],
+  search: boolean,
 }
 
 export interface Props extends React.Props<any> {
@@ -39,9 +40,26 @@ export class Home extends React.Component <Props[], State> {
       })
   }
 
+  activateSearch = () => {
+    this.setState({ search: true, data: [] })
+  }
 
+  searchItems = (event: any) => {
+
+  }
 
   render() {
-    return this.state.data ? <BuildPopular data={this.state.data} url={ this.props.match.url }/> : <Loading speed={500} text={'Loading'}/>
+    return (
+      this.state.data ? 
+        <div style={{ width: '100%' }}>
+          {!this.state.search ? 
+            <div>
+              <SearchButton onClick={this.activateSearch}>Search</SearchButton>
+              <BuildPopular data={this.state.data} url={ this.props.url }/> 
+            </div>
+            : <Search options={this.props.options}/>}
+        </div> :  
+        <Loading speed={500} text={'Loading'}/>
+    )
   }
 }

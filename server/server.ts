@@ -2,6 +2,7 @@ import * as express from 'express'
 import * as path from 'path'
 import * as bodyParser from 'body-parser'
 import * as logger from 'morgan'
+import * as cors from 'cors'
 import { Main } from './routes/main'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 // import * as cookieParser from 'cookie-parser' use later
@@ -43,7 +44,7 @@ export class Server {
   private config () {
     this.app.use(logger('dev'))
 
-    
+    this.app.use('*', cors())
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded())
     this.router()

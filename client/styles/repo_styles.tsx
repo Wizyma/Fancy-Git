@@ -10,7 +10,6 @@ export const RepoDiv = styled.div `
     margin-left: 280px;
     width: 100%;
     min-height: 700px;
-    margin-top: 65px;
     margin-bottom: 10px;
     padding: 36px;
 	opacity:0;  /* make things invisible upon start */

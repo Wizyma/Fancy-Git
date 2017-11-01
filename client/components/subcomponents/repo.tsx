@@ -27,7 +27,7 @@ export class Repo extends React.Component<RepoProps, RepoState> {
       repo: props.location.state,
     }
 
-    this.goBack = this.props.history.goBack
+    this.goBack = () =>  window.location.href = '/'
   }
 
   componentDidMount() {
@@ -36,12 +36,20 @@ export class Repo extends React.Component<RepoProps, RepoState> {
 
   
   render() {
-    return(
+    if (this.state.repo) {
+      return(
         <RepoDiv>
             <div style={{ width: '100%' }}>
                 <BackButton onClick={this.goBack}>Back</BackButton>
             </div>
         </RepoDiv>
+      )
+    }
+    return (
+      <RepoDiv>
+        <h1>NO REPOSITORY SELECTED PLEASE GO BACK</h1>
+        <BackButton onClick={this.goBack}>Back</BackButton>
+      </RepoDiv>
     )
   }
 }
