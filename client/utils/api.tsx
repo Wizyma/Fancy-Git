@@ -1,6 +1,5 @@
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios'
 
-
 class GitAPI {
   constructor() {
     
@@ -9,20 +8,22 @@ class GitAPI {
 
   getToken = () => {
     if (!localStorage.getItem('token')) {
-      return axios.get('http://localhost:1339/token') // fix it later
-      .then((res) => {
-        console.log(res)
+      return fetch('http://localhost:1339/token') 
+      .then((res: Response) => {
+        return res.json
+      })
+      .then((res: any) => {
         localStorage.setItem('token', res.data.token)
       })
     }
   }
 
-  getPopularRepositories = (): Promise<any> => {
+  getPopularRepositories = (): Promise<any>  => {
     return fetch('https://api.github.com/graphql', {
       method:'POST',
-      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  },
+      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  } as any,
       body: JSON.stringify({query: `{
-            search(last: 30, type: REPOSITORY, query: "stars:>15000") {
+            search(first: 50, type: REPOSITORY, query: "stars:>15000") {
               nodes {
                 ... on Repository {
                   name,
@@ -55,14 +56,14 @@ class GitAPI {
             }
           }`}),
     })
-    .then(res => res.json())
-    .then(res => res.data.search.nodes)
+    .then((res: Response) => res.json())
+    .then((res: any) => res.data.search.nodes)
   }
 
-  searchUserOrRepo = (type: string, value: string): Promise<any> => {
+  searchUserOrRepo = (type: string, value: string): Promise<any>  => {
     // ADD :stars>${value} to search by "popularity"
     const request = type === 'REPOSITORY' ? {query: `{
-      search(type: REPOSITORY, query: "${value}:stars:>1000", first: 50){
+      search(type: REPOSITORY, query: "${value}", first: 50){
         nodes {
           ... on Repository {
             name,
@@ -96,11 +97,11 @@ class GitAPI {
 
     return fetch('https://api.github.com/graphql', {
       method:'POST',
-      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  },
+      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  } as any,
       body: JSON.stringify(request),
     })
-    .then(res => res.json())
-    .then(res => res.data.search.nodes)
+    .then((res: Response) => res.json())
+    .then((res: any) => res.data.search.nodes)
   }
 }
 

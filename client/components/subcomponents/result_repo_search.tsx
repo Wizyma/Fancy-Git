@@ -22,14 +22,14 @@ export const BuildResultRepo = (data: object[]|any) => {
                     <PopularName>
                           <span><strong>{elem.name}</strong></span><span>{elem.languages.nodes.length === 1 ? ` - ${elem.languages.nodes[0].name}` : null}</span>
                     </PopularName>
-                    <PopularP data-tip={elem.description}>{emoji.emojify(elem.description)}</PopularP>
+                    <PopularP style={{ height: 'auto' }}>{emoji.emojify(elem.description)}</PopularP>
                     <PopularButton style={{ marginTop: '0px' }} to={{ exact: true, pathname: `/repo`, state:  { login: elem.owner.login, name: elem.name } }}> 
                         More ...
                     </PopularButton>
                 </PopularElem>
             )
           })}
-          <ReactTooltip />
+          <ReactTooltip effect="solid"/>
       </PopularDiv>
   )
 }

@@ -36,7 +36,7 @@ export class Search extends React.Component<Props, State> {
   searchItems = (value: string) => {
     console.log(this.state.selected)
     api.searchUserOrRepo(this.state.selected, value)
-        .then((data) => {
+        .then((data: object[]) => {
           this.setState({ data })
         })
   }
@@ -50,7 +50,7 @@ export class Search extends React.Component<Props, State> {
 
   handleSelected = (event: any) => {
     const selected = event.target.value
-    this.setState({ selected })
+    this.setState({ selected, input: '' })
   }
 
   handleFocus = (event: any) => {

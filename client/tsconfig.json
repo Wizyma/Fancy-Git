@@ -7,9 +7,15 @@
         "allowJs": true,
         "checkJs": true,
         "strict": true,
-        "watch": true
+        "watch": true,
+        "lib": [
+            "es2017",
+            "dom",
+            "esnext.asynciterable"
+        ]
     },
     "include": [
         "./**/*"
-    ]
+    ],
+    "exclude": [ "node_modules" ]
 }

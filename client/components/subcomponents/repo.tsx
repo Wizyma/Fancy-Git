@@ -5,10 +5,10 @@ import { BackButton } from '../../styles/globals'
 
 
 interface RepoProps extends React.Props<any> {
-  history: {
+  history?: {
     goBack: React.Props<History>|undefined,
   },
-  location: {
+  location?: {
     state: object,
   }
 }
@@ -23,8 +23,10 @@ export class Repo extends React.Component<RepoProps, RepoState> {
   constructor(props: RepoProps) {
     super(props)
 
-    this.state = {
-      repo: props.location.state,
+    if (props.location) {
+      this.state = {
+        repo: props.location.state,
+      } 
     }
 
     this.goBack = () =>  window.location.href = '/'
