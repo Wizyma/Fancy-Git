@@ -7,12 +7,32 @@ interface Results {
   data: object[]
 }
 
+interface ArrayElem {
+
+  stargazers: {
+    totalCount: number,
+  },
+  owner: {
+    avatarUrl: string,
+    login: string,
+  },
+  name: string,
+  languages: {
+    nodes: any| {
+      name: string,
+      length: Function,
+    },
+  },
+  description: string,
+  
+}
+
 export const BuildResultRepo = (data: object[]|any) => {
   const results = data.data
   console.log(results)
   return(
       <PopularDiv>
-          {results.map((elem: any, i: number) => {
+          {results.map((elem: ArrayElem, i: number) => {
             return(
                 <PopularElem key={i}>
                         <PopularStars>

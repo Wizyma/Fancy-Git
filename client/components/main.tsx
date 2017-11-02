@@ -1,20 +1,15 @@
 import * as React from 'react'
-import * as Browser from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Nav } from './nav'
 import { Home } from './home'
 import { Repo } from './subcomponents/repo'
 import { MainDiv } from '../styles/globals'
 import { Search } from './search'
 
-const Router = Browser.Router
-const Route = Browser.Route
-const Switch = Browser.Switch
-
-
-export class App extends React.Component<any, any>{
+export class App extends React.Component{
   render() {
     return(
-    <Router history>
+    <Router>
         <MainDiv className="container">
             <Nav />
             <Switch>

@@ -4,6 +4,7 @@ import { Loading } from './loading'
 import { Input, Select, SpanSeach, SearchDiv } from '../styles/search_styles'
 import { BackButton } from '../styles/globals'
 import { BuildResultRepo } from './subcomponents/result_repo_search'
+import { BuildResultUsers } from './subcomponents/result_user_search'
 
 export interface State {
   input: string,
@@ -73,7 +74,8 @@ export class Search extends React.Component<Props, State> {
             </SearchDiv>
             {this.state.input !== '' && !this.state.data ? <Loading speed={500} text={'Loading'}/> : 
             <div style={{ marginTop: '22px' }}>
-                {this.state.input !== '' && this.state.selected === 'REPOSITORY' && this.state.data ? <BuildResultRepo data={ this.state.data } /> : null}
+                {this.state.input !== '' && this.state.selected === 'REPOSITORY' && this.state.data ? <BuildResultRepo props={ this.state.data } />
+                : <BuildResultUsers  props={this.state.data} />}
             </div>} 
         </div>
     )
