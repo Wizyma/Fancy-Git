@@ -25,7 +25,7 @@ export const BuildPopular = (fetched: Build) => {
   return(
       <PopularDiv>
           <PopularTitle>Most popular repos on GitHub</PopularTitle>
-          {data.map((elem: object|any, i: number) => {
+          {data.map((elem: any, i: number) => {
             return(
                   <PopularElem key={i}>
                       <PopularRank>{emoji.emojify(':medal:')} {i + 1}</PopularRank>

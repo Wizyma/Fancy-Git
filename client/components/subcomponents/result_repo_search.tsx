@@ -4,11 +4,11 @@ import { PopularDiv, PopularElem, Img, PopularName, PopularStars, PopularP, Popu
 const emoji = require('node-emoji')
 
 interface Results {
-  data: object[]
+  data: object[],
+  map: Function
 }
 
 interface ArrayElem {
-
   stargazers: {
     totalCount: number,
   },
@@ -24,12 +24,10 @@ interface ArrayElem {
     },
   },
   description: string,
-  
 }
 
 export const BuildResultRepo = (data: object[]|any) => {
-  const results = data.data
-  console.log(results)
+  const results: Results = data.props
   return(
       <PopularDiv>
           {results.map((elem: ArrayElem, i: number) => {

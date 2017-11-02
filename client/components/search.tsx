@@ -35,7 +35,6 @@ export class Search extends React.Component<Props, State> {
   }
 
   searchItems = (value: string) => {
-    console.log(this.state.selected)
     api.searchUserOrRepo(this.state.selected, value)
         .then((data: object[]) => {
           this.setState({ data })
@@ -75,7 +74,9 @@ export class Search extends React.Component<Props, State> {
             {this.state.input !== '' && !this.state.data ? <Loading speed={500} text={'Loading'}/> : 
             <div style={{ marginTop: '22px' }}>
                 {this.state.input !== '' && this.state.selected === 'REPOSITORY' && this.state.data ? <BuildResultRepo props={ this.state.data } />
-                : <BuildResultUsers  props={this.state.data} />}
+                : null}
+                {this.state.input !== '' && this.state.selected === 'USER' && this.state.data ? <BuildResultUsers props={ this.state.data } />
+                : null}
             </div>} 
         </div>
     )

@@ -1,5 +1,14 @@
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios'
 
+interface Results {
+  data : {
+    search :{
+      nodes: object[]|any,
+    },
+  }
+}
+
+
 class GitAPI {
   constructor() {
     
@@ -7,9 +16,10 @@ class GitAPI {
   }
 
   getToken = () => {
+    console.log(localStorage.getItem('token'))
     if (!localStorage.getItem('token')) {
-      return fetch('http://localhost:1339/token') 
-      .then((res: Response) => {
+      return axios.get('http://localhost:1339/token') 
+      .then((res: any) => {
         return res.json
       })
       .then((res: any) => {
@@ -57,7 +67,7 @@ class GitAPI {
           }`}),
     })
     .then((res: Response) => res.json())
-    .then((res: any) => res.data.search.nodes)
+    .then((res: Results) => res.data.search.nodes)
   }
 
   searchUserOrRepo = (type: string, value: string): Promise<any>  => {
@@ -89,7 +99,8 @@ class GitAPI {
           ... on User {
             name,
             avatarUrl,
-            location
+            location,
+            login
           }
         }
       }
@@ -101,7 +112,7 @@ class GitAPI {
       body: JSON.stringify(request),
     })
     .then((res: Response) => res.json())
-    .then((res: any) => res.data.search.nodes)
+    .then((res: Results) => res.data.search.nodes)
   }
 }
 
