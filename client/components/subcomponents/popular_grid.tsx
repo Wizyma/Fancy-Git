@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactTooltip from 'react-tooltip' 
-import { PopularDiv, PopularElem, Img, PopularTitle, PopularName, PopularP, PopularStars , PopularButton, PopularRank } from '../../styles/popular_styles'
+import { PopularDiv, PopularElem, PopularContainer, Img, PopularTitle, PopularName, PopularP, PopularStars , PopularButton, PopularRank } from '../../styles/popular_styles'
 const emoji = require('node-emoji')
 
 
@@ -28,6 +28,7 @@ export const BuildPopular = (fetched: Build) => {
           {data.map((elem: any, i: number) => {
             return(
                   <PopularElem key={i}>
+                    <PopularContainer>
                       <PopularRank>{emoji.emojify(':medal:')} {i + 1}</PopularRank>
                       <PopularStars>
                           <span data-tip="Forks"><span style={{ color: '#3f51b5' }}>{elem.forks.totalCount}</span> {emoji.emojify(':open_book:')}</span>
@@ -49,7 +50,8 @@ export const BuildPopular = (fetched: Build) => {
                       </div>
                       <PopularButton to={{ exact: true, pathname: `${fetched.url}repo`, state:  { login: elem.owner.login, name: elem.name } }}> 
                         More ...
-                    </PopularButton>
+                      </PopularButton>
+                    </PopularContainer>
                   </PopularElem>
             )
           })}

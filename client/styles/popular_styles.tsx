@@ -9,15 +9,21 @@ export const PopularDiv = styled.div `
 
 export const PopularElem = styled.div `
     width: 280px;
+    height: 335px;
     margin: 0 auto;
-    text-align: center;
-    border: 1px solid;
     margin-bottom: 10px;
+`
+    
+export const PopularContainer = styled.div `
+    width: 208px;
+    height: 263px;
+    position: absolute;
+    transition:all 1s ease;
+    padding: 36px;
+    text-align: center;
     border-radius: 10px;
     border-color: white;
-    padding: 36px;
     box-shadow: 4px -2px #f7f7f7;
-    transition:all 1s ease;
     &:hover{
         margin-top: 10px;
         margin-left: 20;
@@ -52,7 +58,7 @@ export const PopularP = styled.p `
 
 export const PopularStars = styled.div `
     position: absolute;
-    margin-left: 245px;
+    margin-left: 190px;
     margin-top: -25px;
     display: grid;
     text-align: right;
@@ -64,7 +70,7 @@ export const PopularButton = styled(Link) `
     width: 90px;
     padding: 6px;
     position: absolute;
-    margin-left: -150px;
+    margin-left: -110px;
     margin-top: 28px;
     background-color: #fbfbfb;
     border: 1px solid;
