@@ -24,10 +24,7 @@ class GitAPI {
     console.log(localStorage.getItem('token'))
     if (!localStorage.getItem('token')) {
       return axios.get('http://localhost:1339/token') 
-      .then((res: any) => {
-        return res.json
-      })
-      .then((res: any) => {
+      .then((res: AxiosResponse) => {
         localStorage.setItem('token', res.data.token)
       })
     }
