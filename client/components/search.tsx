@@ -24,6 +24,8 @@ export class Search extends React.Component<Props, State> {
     data: null,
   }
 
+  private timeOutSearch: number
+
   constructor(props: Props) {
     super(props)
 
@@ -35,22 +37,25 @@ export class Search extends React.Component<Props, State> {
   }
 
   searchItems = (value: string) => {
-    api.searchUserOrRepo(this.state.selected, value)
-        .then((data: object[]) => {
-          this.setState({ data })
-        })
+    this.timeOutSearch = window.setTimeout(() => {
+      api.searchUserOrRepo(this.state.selected, value)
+      .then((data: object[]) => {
+        this.setState({ data })
+      })
+    },                                     500) 
   }
 
 
   handleInput = (event: any) => {
     const input = event.target.value
+    window.clearTimeout(this.timeOutSearch)
     this.searchItems(input)
     this.setState({ input })
   }
 
   handleSelected = (event: any) => {
     const selected = event.target.value
-    this.setState({ selected, input: '' })
+    this.setState({ selected, input: '', data: null })
   }
 
   handleFocus = (event: any) => {
