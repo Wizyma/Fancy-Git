@@ -1,4 +1,4 @@
-import axios, { AxiosPromise, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 interface Results {
   data : {
@@ -10,9 +10,14 @@ interface Results {
 
 
 class GitAPI {
+  private instance: AxiosInstance
+
   constructor() {
-    
     this.getToken()
+    this.instance = axios.create({
+      timeout: 10000,
+      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  },
+    })
   }
 
   getToken = () => {
@@ -29,10 +34,8 @@ class GitAPI {
   }
 
   getPopularRepositories = (): Promise<any>  => {
-    return fetch('https://api.github.com/graphql', {
-      method:'POST',
-      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  } as any,
-      body: JSON.stringify({query: `{
+    return this.instance.post('https://api.github.com/graphql', {
+      query: `{
             search(first: 50, type: REPOSITORY, query: "stars:>15000") {
               nodes {
                 ... on Repository {
@@ -64,15 +67,14 @@ class GitAPI {
                 }
               }
             }
-          }`}),
+          }`,
     })
-    .then((res: Response) => res.json())
-    .then((res: Results) => res.data.search.nodes)
+    .then((res: AxiosResponse) => res.data.data.search.nodes)
   }
 
   searchUserOrRepo = (type: string, value: string): Promise<any>  => {
     // ADD :stars>${value} to search by "popularity"
-    const request = type === 'REPOSITORY' ? {query: `{
+    const request = type === 'REPOSITORY' ? `{
       search(type: REPOSITORY, query: "${value}", first: 50){
         nodes {
           ... on Repository {
@@ -93,7 +95,7 @@ class GitAPI {
           } 
         }
       }
-    }`} : {query: `{
+    }` :  `{
       search(type: USER, query: "${value}", first: 50){
         nodes {
           ... on User {
@@ -104,15 +106,12 @@ class GitAPI {
           }
         }
       }
-    }`}
+    }`
 
-    return fetch('https://api.github.com/graphql', {
-      method:'POST',
-      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  } as any,
-      body: JSON.stringify(request),
+    return this.instance.post('https://api.github.com/graphql', {
+      query: request,
     })
-    .then((res: Response) => res.json())
-    .then((res: Results) => res.data.search.nodes)
+    .then((res: AxiosResponse) => res.data.data.search.nodes)
   }
 }
 

@@ -38,7 +38,7 @@ export class Repo extends React.Component<RepoProps, RepoState> {
 
   
   render() {
-    if (this.state.repo) {
+    if (this.state && this.state.repo) {
       return(
         <RepoDiv>
             <div style={{ width: '100%' }}>

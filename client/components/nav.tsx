@@ -9,6 +9,9 @@ export const Nav = () => (
         <Li>
         <NavLink activeClassName="active" to="/popular">Popular</NavLink>
         </Li>
+        <Li>
+        <NavLink activeClassName="active" to="/search">Search</NavLink>
+        </Li>
     </Ul>
 )
 
