@@ -6,8 +6,8 @@ Fancy-Git is (or will be) a minimalist git explorer
 **Init commands**
 
 * clone the repo and **run npm install**
-* **npm run dev:start** to run client
-* **npm run dev:server** to start the server
+* **npm run start:dev** to run client
+* **npm run start:server** to start the server
 
 To use it you will need a github token for the api create one then create a file called config.json at the root of the project with the same keys as the file **template.config.json**
 

@@ -1,4 +1,21 @@
 {
     "uri": "https://api.github.com/graphql",
-    "token": "YOUR_GIT_TOKEN"
+    "token": "YOUR_GIT_TOKEN",
+    "database": {
+        "dev": {
+            "driver": "your driver",
+            "user": "your user",
+            "database": "databse",
+            "password": "password",
+            "hostname": "host"
+        },
+    
+        "production": {
+            "driver": "driver",
+            "user": "user",
+            "database": "database",
+            "password": "password",
+            "hostname": "host"
+        }
+    }
 }
