@@ -2,7 +2,7 @@ import * as React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Nav } from './nav'
 import { Popular } from './popular'
-import { Repo } from './subcomponents/repo'
+import { Repo } from './repo'
 import { MainDiv } from '../styles/globals'
 import { Search } from './search'
 

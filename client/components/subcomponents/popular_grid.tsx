@@ -27,7 +27,7 @@ export const BuildPopular = (fetched: Build) => {
           <PopularTitle>Most popular repos on GitHub</PopularTitle>
           {data.map((elem: any, i: number) => {
             return(
-                  <PopularElem key={i} style={{ width: '340px', height: '385px' }}>
+                  <PopularElem key={i} style={{ width: '380px', height: '385px' }}>
                     <PopularContainer style={{ width: '290px', height: '285px' }}>
                       <PopularRank>{emoji.emojify(':medal:')} {i + 1}</PopularRank>
                       <PopularStars style={{ marginLeft: '240px' }}>

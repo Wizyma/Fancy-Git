@@ -15,13 +15,11 @@ class GitAPI {
   constructor() {
     this.getToken()
     this.instance = axios.create({
-      timeout: 20000,
       headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  },
     })
   }
 
   getToken = () => {
-    console.log(localStorage.getItem('token'))
     if (!localStorage.getItem('token')) {
       return axios.get('http://localhost:1339/token') 
       .then((res: AxiosResponse) => {
@@ -109,6 +107,84 @@ class GitAPI {
       query: request,
     })
     .then((res: AxiosResponse) => res.data.data.search.nodes)
+  }
+
+  getClickedRepository = (owner: string, repoName: string): Promise<any> => {
+    const request = `
+    query{
+    repository(owner: "${owner}", name: "${repoName}"){
+      createdAt,
+      name,
+      owner{
+        avatarUrl, 
+        login,
+      },
+      stargazers(first: 1){
+        totalCount,
+      },
+      hasIssuesEnabled,
+      description,
+      defaultBranchRef{
+        name,
+      },
+      collaborators(first: 50){
+        nodes{
+          login, avatarUrl,
+        },
+      },
+      isFork,
+      projects(first: 10){
+        totalCount, 
+        nodes{
+          name,
+          state,
+          creator{
+            login,
+          },
+        },
+      },
+      viewerCanSubscribe,
+      viewerHasStarred,
+      id,
+      repositoryTopics(first: 50){
+        nodes{
+          topic{
+            name,
+          }, 
+          url,
+        },
+      },
+      licenseInfo{
+        name,
+      },
+      hasWikiEnabled,
+      primaryLanguage{
+        name,
+        color,
+      },
+      issues(first: 50, states: OPEN){
+        nodes{
+          author{
+            avatarUrl, 
+            login,
+          }, 
+          createdAt, 
+          id, 
+          assignees(first: 10){
+            nodes{
+              login
+            },
+          },
+        },
+      },
+    }
+  }
+    `
+
+    return this.instance.post('https://api.github.com/graphql', {
+      query: request,
+    })
+    .then((res: AxiosResponse) => res.data)
   }
 }
 
