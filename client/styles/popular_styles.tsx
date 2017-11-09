@@ -9,7 +9,7 @@ export const PopularDiv = styled.div `
 
 export const PopularElem = styled.div `
     width: 280px;
-    height: 335px;
+    height: 365px;
     margin: 0 auto;
     margin-bottom: 10px;
 `

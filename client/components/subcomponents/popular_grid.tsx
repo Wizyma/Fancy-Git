@@ -27,10 +27,10 @@ export const BuildPopular = (fetched: Build) => {
           <PopularTitle>Most popular repos on GitHub</PopularTitle>
           {data.map((elem: any, i: number) => {
             return(
-                  <PopularElem key={i}>
-                    <PopularContainer>
+                  <PopularElem key={i} style={{ width: '340px', height: '385px' }}>
+                    <PopularContainer style={{ width: '290px', height: '285px' }}>
                       <PopularRank>{emoji.emojify(':medal:')} {i + 1}</PopularRank>
-                      <PopularStars>
+                      <PopularStars style={{ marginLeft: '240px' }}>
                           <span data-tip="Forks"><span style={{ color: '#3f51b5' }}>{elem.forks.totalCount}</span> {emoji.emojify(':open_book:')}</span>
                           <span data-tip="Watchers"><span style={{ color: '#3f51b5' }}>{elem.watchers.totalCount}</span> {emoji.emojify(':eyes:')}</span>
                           <span data-tip="Stars"><span style={{ color: '#3f51b5' }}>{elem.stargazers.totalCount}</span> {emoji.emojify(':star:')}</span>
@@ -40,7 +40,7 @@ export const BuildPopular = (fetched: Build) => {
                           <span><strong>{elem.name}</strong></span><span>{elem.languages.nodes.length === 1 ? ` - ${elem.languages.nodes[0].name}` : null}</span>
                       </PopularName>
                       <PopularP>{emoji.emojify(elem.description)}</PopularP>
-                      <div style={{ color: '#777', float: 'right', textAlign: 'right' }}>
+                      <div style={{ color: '#777', float: 'right', textAlign: 'right', marginRight: '-20px' }}>
                           <span>STATUS</span>
                           <div style={{ display: 'grid' }}>
                               {elem.hasIssuesEnabled ? <span style={{ color : '#777' }}>
@@ -48,7 +48,7 @@ export const BuildPopular = (fetched: Build) => {
                               <span>Type : {elem.owner.__typename}</span>
                           </div>
                       </div>
-                      <PopularButton to={{ exact: true, pathname: `${fetched.url}repo`, state:  { login: elem.owner.login, name: elem.name } }}> 
+                      <PopularButton style={{ marginLeft: '-150px' }} to={{ exact: true, pathname: `${fetched.url}repo`, state:  { login: elem.owner.login, name: elem.name } }}> 
                         More ...
                       </PopularButton>
                     </PopularContainer>
