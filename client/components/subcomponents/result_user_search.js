@@ -1,0 +1,23 @@
+import React, { Component } from 'react'
+import { PopularDiv, PopularElem, Img, PopularButton, PopularName } from '../../styles/popular_styles'
+
+export const BuildResultUsers = (data) => {
+  const datas = data.props
+  return(
+    <PopularDiv>
+        {datas.map((elem, i) => {
+        return(
+            <PopularElem key={i}>
+                <Img src={elem.avatarUrl}/>
+                <PopularName>
+                            {elem.name ? <span><strong>{elem.name}</strong> - </span> : null}<span> {elem.login} </span>
+                        </PopularName>
+                <PopularButton style={{ marginTop: '0px' }} to={{ exact: true, pathname: `/user`, state:  { name: elem.name } }}> 
+                    More ...
+                </PopularButton>
+            </PopularElem>
+        )
+        })}
+    </PopularDiv>
+  )
+}

@@ -1,27 +1,8 @@
-import * as React from 'react'
+import React, { Component } from 'react'
 import { LoadingDiv } from '../styles/globals'
 
-interface defaultProps {
-  text: string,
-  speed: number
-}
-
-interface State {
-  text: string,
-  speed: number
-}
-
-export class Loading extends React.Component<defaultProps, State> {
-  public static defaultProps: defaultProps = {
-    text: 'Loading',
-    speed: 300,
-  }
-
-  public state: State
-
-  private interval: WindowTimers | any
-
-  constructor(props: defaultProps) {
+export class Loading extends React.Component {
+  constructor(props) {
     super(props)
 
     this.state = {

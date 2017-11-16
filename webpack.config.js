@@ -1,29 +1,36 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-    entry: "./client/index.tsx",
-    output: {
-        filename: "index.bundle.js",
-        path: __dirname + "/dist-client"
-    },
+// Constant with our paths
+const paths = {
+    DIST: path.resolve(__dirname, 'dist-client'),
+    JS: path.resolve(__dirname, 'client'),
+    SRC: path.resolve(__dirname, 'client/public')
+};
 
+module.exports = {
+    entry: path.join(paths.JS, 'index.js'),
+    output: {
+        path: paths.DIST,
+        filename: 'index.bundle.js'
+    },
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
 
     resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx", ".js", ".json"]
+        extensions: [".js", ".json"]
     },
 
     module: {
         rules: [
-            // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-            { test: /\.tsx?$/, loader: "awesome-typescript-loader?configFileName=./client/tsconfig.json" },
-
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
-        ]
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: [
+                    'babel-loader',
+                ],
+            },
+        ],
     },
 
     // When importing a module whose path matches one of the following, just
@@ -39,7 +46,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(path.resolve(__dirname, 'client/public'), 'index.html')
+            template: path.join(paths.SRC, 'index.html')
         })
     ],
 };

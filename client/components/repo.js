@@ -1,36 +1,12 @@
-import * as React from 'react'
+import React, { Component } from 'react'
 import { RepoDiv } from '../styles/repo_styles'
 import { BackButton } from '../styles/globals'
 import { api } from '../utils/api'
 
 
 
-interface RepoProps extends React.Props<any> {
-  history: {
-    goBack: Function,
-  },
-  location?: {
-    state: {
-      login: string,
-      name: string,
-    },
-  }
-}
-  
-interface RepoState {
-  repo: {
-    login: string,
-    name: string,
-  },
-  repository?: object,
-  error?: object[]
-}
-
-export class Repo extends React.Component<RepoProps, RepoState> {
-  private goBack: React.Props<History>|any
-  public state: RepoState
-
-  constructor(props: RepoProps) {
+export class Repo extends Component {
+  constructor(props) {
     super(props)
     console.log(props)
     if (props.location) {
@@ -52,7 +28,6 @@ export class Repo extends React.Component<RepoProps, RepoState> {
 
   
   render() {
-    console.log(this.state)
     if (this.state && this.state.repo) {
       return(
         <RepoDiv>

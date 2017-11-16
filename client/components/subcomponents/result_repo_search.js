@@ -1,36 +1,13 @@
-import * as React from 'react'
-import * as ReactTooltip from 'react-tooltip' 
+import React, { Component } from 'react'
+import ReactTooltip from 'react-tooltip' 
 import { PopularDiv, PopularElem, PopularContainer, Img, PopularName, PopularStars, PopularP, PopularButton } from '../../styles/popular_styles'
 const emoji = require('node-emoji')
 
-interface Results {
-  data: object[],
-  map: Function
-}
-
-interface ArrayElem {
-  stargazers: {
-    totalCount: number,
-  },
-  owner: {
-    avatarUrl: string,
-    login: string,
-  },
-  name: string,
-  languages: {
-    nodes: any| {
-      name: string,
-      length: Function,
-    },
-  },
-  description: string,
-}
-
-export const BuildResultRepo = (data: object[]|any) => {
-  const results: Results = data.props
+export const BuildResultRepo = (data) => {
+  const results = data.props
   return(
       <PopularDiv>
-          {results.map((elem: ArrayElem, i: number) => {
+          {results.map((elem, i) => {
             return(
                 <PopularElem key={i}>
                   <PopularContainer>

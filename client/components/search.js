@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { Component } from 'react'
 import { api } from '../utils/api'
 import { Loading } from './loading'
 import { Input, Select, SpanSeach, SearchDiv } from '../styles/search_styles'
@@ -6,27 +6,10 @@ import { BackButton } from '../styles/globals'
 import { BuildResultRepo } from './subcomponents/result_repo_search'
 import { BuildResultUsers } from './subcomponents/result_user_search'
 
-export interface State {
-  input: string,
-  selected: string,
-  data: object[]|any
-}
-  
-export interface Props extends React.Props<any> {
-  options: object[]
-}
   
 
-export class Search extends React.Component<Props, State> {
-  public state: State = {
-    input: '',
-    selected: '',
-    data: null,
-  }
-
-  private timeOutSearch: number
-
-  constructor(props: Props) {
+export class Search extends Component {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -36,29 +19,29 @@ export class Search extends React.Component<Props, State> {
     }
   }
 
-  searchItems = (value: string) => {
+  searchItems = (value) => {
     this.timeOutSearch = window.setTimeout(() => {
       api.searchUserOrRepo(this.state.selected, value)
-      .then((data: object[]) => {
+      .then((data) => {
         this.setState({ data })
       })
     },                                     500) 
   }
 
 
-  handleInput = (event: any) => {
+  handleInput = (event) => {
     const input = event.target.value
     window.clearTimeout(this.timeOutSearch)
     this.searchItems(input)
     this.setState({ input })
   }
 
-  handleSelected = (event: any) => {
+  handleSelected = (event) => {
     const selected = event.target.value
     this.setState({ selected, input: '', data: null })
   }
 
-  handleFocus = (event: any) => {
+  handleFocus = (event) => {
     event.target.setSelectionRange(0, event.target.value.length)
   }
 
@@ -70,7 +53,7 @@ export class Search extends React.Component<Props, State> {
                 <SpanSeach>{this.state.selected === 'REPOSITORY' ? 'Search a repository' : 'Search a user'}</SpanSeach>
                 <Input placeholder="Search..." value={this.state.input} onChange={this.handleInput} onFocus={this.handleFocus}/>
                 <Select value={this.state.selected} onChange={this.handleSelected}>
-                {this.props.options.map((elem: any, i) => {
+                {this.props.options.map((elem, i) => {
                   const key = Object.keys(elem)[0]
                   return <option key={i} value={key}>{elem[key]}</option>
                 })}
