@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { PopularDiv, PopularElem, Img, PopularButton, PopularName } from '../../styles/popular_styles'
+import ReactTooltip from 'react-tooltip' 
+import { PopularDiv, PopularElem, PopularContainer, Img, PopularButton, PopularName } from '../../styles/popular_styles'
 
 export const BuildResultUsers = (data) => {
   const datas = data.props
@@ -8,13 +9,15 @@ export const BuildResultUsers = (data) => {
         {datas.map((elem, i) => {
         return(
             <PopularElem key={i}>
+            <PopularContainer>
                 <Img src={elem.avatarUrl}/>
                 <PopularName>
                             {elem.name ? <span><strong>{elem.name}</strong> - </span> : null}<span> {elem.login} </span>
                         </PopularName>
-                <PopularButton style={{ marginTop: '0px' }} to={{ exact: true, pathname: `/user`, state:  { name: elem.name } }}> 
+                <PopularButton style={{ marginTop: '25px' }} to={{ exact: true, pathname: `/user`, state:  { name: elem.name } }}> 
                     More ...
                 </PopularButton>
+                </PopularContainer>
             </PopularElem>
         )
         })}
