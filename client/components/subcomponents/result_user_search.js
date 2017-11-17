@@ -14,7 +14,7 @@ export const BuildResultUsers = (data) => {
                 <PopularName>
                             {elem.name ? <span><strong>{elem.name}</strong> - </span> : null}<span> {elem.login} </span>
                         </PopularName>
-                <PopularButton style={{ marginTop: '25px' }} to={{ exact: true, pathname: `/user`, state:  { name: elem.name } }}> 
+                <PopularButton style={{ marginTop: '25px' }} to={{ exact: true, pathname: `/user`, state:  { name: elem.login } }}> 
                     More ...
                 </PopularButton>
                 </PopularContainer>

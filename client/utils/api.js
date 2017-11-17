@@ -177,29 +177,50 @@ class GitAPI {
   }
 
   getInfoUser = (login) => {
-    return this.instance.post('', {
-      query: ` user(login: "aaronabramov"){
-        avatarUrl,
-        name,
-        login,
-        repositories(first: 50){
-          nodes{
-            name,
-            createdAt,
-            stargazers{
-              totalCount
-            }
-            languages(first: 3){
-              nodes{
-                name
-              }
-            }
-          }
-        }
-      }
+    console.log(login)
+    return this.instance.post('https://api.github.com/graphql', {
+      query: `query{
+        user(login: "${login}"){
+         avatarUrl,
+         name,
+         login,
+         repositories(first: 50){
+           nodes{
+             name,
+             createdAt,
+             stargazers{
+               totalCount
+             }
+             description
+             languages(first: 3){
+               nodes{
+                 name
+               }
+             }
+           }
+         }
+         contributedRepositories(first: 50){
+           nodes{
+             name,
+             description,
+             owner{
+               avatarUrl, 
+               login
+             }
+             stargazers(first: 1){
+               totalCount
+             }
+             description
+           }
+         }
+         starredRepositories(first: 1){
+           totalCount
+         }
+       }
+     }
       `
     })
-    .then((res) => console.log(res) || res.data)
+    .then((res) => res.data)
   }
 }
 
