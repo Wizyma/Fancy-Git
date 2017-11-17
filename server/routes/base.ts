@@ -12,14 +12,14 @@ export abstract class BaseController {
   public req: Request
   public res: Response
 
-  static connect(router: Router, instance) {
+  static connect(router: any, instance: any) {
     const routes = []
     for (const idx in this.routes) {
       routes.push(this.routes[idx])
     }
 
     const rt: Router[] = routes.map((route: Route) => {
-      return router[route.verb](route.path, (req, res) => {
+      return router[route.verb](route.path, (req: Request, res: Response) => {
         instance[route.action](req, res)
       })
     })

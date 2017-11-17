@@ -5,10 +5,8 @@ import * as logger from 'morgan'
 import * as cors from 'cors'
 import { Main } from './routes/main'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
-import { db } from './models/index'
 // import * as cookieParser from 'cookie-parser' use later
 const schema = require('./graphql/schemas')
-const models = require('./models')
 
 
 interface ServerOptions {
@@ -51,20 +49,6 @@ export class Server {
     this.app.use(bodyParser.urlencoded())
     this.router()
     this.app.use('/graphql', graphqlExpress({ schema }))
-    db.authenticate()
-    .then(() => {
-      console.log('successful connection')
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-
-    models.db.sync()
-    .then(() => {
-      console.log('Created table')
-    }).catch((err) => {
-      console.log(err,'something went wrong with the database update')
-    })
     
     if (this.app.get('env') === 'development') {
       this.app.use('/graphiql', graphiqlExpress({

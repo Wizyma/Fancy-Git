@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ts-electron": "tsc --p ./electron/tsconfig.json",
+    "build-back": "tsc --p ./server/tsconfig.json",
     "desk": "electron ./dist-desktop/init.js",
     "dev-build": "webpack",
     "start:dev": "webpack-dev-server",

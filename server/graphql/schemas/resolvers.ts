@@ -16,7 +16,7 @@ module.exports = {
     allLinks: () => links,
   },
   Mutation: {
-    createLink: (_, data) => {
+    createLink: (_: any, data: any) => {
       const newLink = (<any>Object).assign({ id: links.length + 1 }, data)
       links.push(newLink)
       return newLink

@@ -1,5 +1,5 @@
 import { BaseController, Route } from './base'
-import { Router } from 'express'
+import { Router, Request, Response } from 'express'
 import axios from 'axios'
 import * as path from 'path'
 
@@ -10,7 +10,7 @@ export class Main extends BaseController {
     { verb: 'get', path: '/token', action: 'index' },
   ]
   
-  private index = (req, res) => {
+  private index = (req: Request, res: Response) => {
     const config_path = path.join(process.cwd(), 'config.json')
     const config = require(config_path)
 
