@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
+import { Img } from '../../styles/popular_styles'
+import { Container } from '../../styles/clicked_repo'
 
 export const SingleRepo = ({ repo }) => console.log(repo) || (
-    <div>
+    <Container>
         <div>
-            <h1><strong>Project : {repo.name}</strong></h1>
-            <h1><strong>By@ {repo.owner.login}</strong></h1>
+            <span><strong>Project : {repo.name}</strong></span>
+            <br />
+            <span><strong>By @{repo.owner.login}</strong></span>
         </div>
         <div>
-            <img src={repo.owner.avatarUrl}/>
+            <Img src={repo.owner.avatarUrl}/>
         </div>
-    </div>
+    </Container>
 )

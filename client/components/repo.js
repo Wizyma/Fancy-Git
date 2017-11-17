@@ -35,8 +35,8 @@ export class Repo extends Component {
     const { repository, repo, error } = this.state
     return(
       <RepoDiv>
+      <BackButton onClick={this.goBack}>Back</BackButton>
           <div style={{ width: '100%' }}>
-              <BackButton onClick={this.goBack}>Back</BackButton>
               {repository && <SingleRepo repo={repository} />}
               {!repo && <h1>NO REPOSITORY SELECTED PLEASE GO BACK</h1>}
               {repo && !repository && <Loading speed={500} text='Loading' />}

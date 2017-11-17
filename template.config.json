@@ -1,6 +1,8 @@
 {
     "uri": "https://api.github.com/graphql",
     "token": "YOUR_GIT_TOKEN",
+    "mdeium_client_id": "YOUR_MEDIUM_CLIENT_ID",
+    "medium_secret": "YOUR_MEDIUM_SECRET",
     "database": {
         "dev": {
             "driver": "your driver",
