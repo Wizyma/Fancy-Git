@@ -175,6 +175,32 @@ class GitAPI {
     })
     .then((res) => res.data)
   }
+
+  getInfoUser = (login) => {
+    return this.instance.post('', {
+      query: ` user(login: "aaronabramov"){
+        avatarUrl,
+        name,
+        login,
+        repositories(first: 50){
+          nodes{
+            name,
+            createdAt,
+            stargazers{
+              totalCount
+            }
+            languages(first: 3){
+              nodes{
+                name
+              }
+            }
+          }
+        }
+      }
+      `
+    })
+    .then((res) => console.log(res) || res.data)
+  }
 }
 
 export const api = new GitAPI()
