@@ -2,16 +2,20 @@ import React, { Component } from 'react'
 import { RepoDiv } from '../styles/repo_styles'
 import { BackButton } from '../styles/globals'
 import { api } from '../utils/api'
+import { SingleRepo } from './subcomponents/clicked_repo'
+import { Loading } from './loading'
 
 
 
 export class Repo extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
+
     if (props.location) {
       this.state = {
         repo: props.location.state,
+        repository: null,
+        error: null
       } 
     }
 
@@ -28,20 +32,16 @@ export class Repo extends Component {
 
   
   render() {
-    if (this.state && this.state.repo) {
-      return(
-        <RepoDiv>
-            <div style={{ width: '100%' }}>
-                <BackButton onClick={this.goBack}>Back</BackButton>
-            </div>
-        </RepoDiv>
-      )
-    }
-    return (
+    const { repository, repo, error } = this.state
+    return(
       <RepoDiv>
-        <h1>NO REPOSITORY SELECTED PLEASE GO BACK</h1>
-        <BackButton onClick={this.goBack}>Back</BackButton>
+          <div style={{ width: '100%' }}>
+              <BackButton onClick={this.goBack}>Back</BackButton>
+              {repository && <SingleRepo repo={repository} />}
+              {!repo && <h1>NO REPOSITORY SELECTED PLEASE GO BACK</h1>}
+              {repo && !repository && <Loading speed={500} text='Loading' />}
+          </div>
       </RepoDiv>
-    )
+    )  
   }
 }
