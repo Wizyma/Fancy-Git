@@ -24,7 +24,6 @@ export class Loading extends React.Component {
           }
         })
       }
-    // tslint:disable-next-line:align
     }, this.props.speed)
   }
 

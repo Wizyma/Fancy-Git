@@ -6,6 +6,30 @@ export interface Route {
   verb: string,
 }
 
+export interface Config {
+  uri: string,
+  token: string,
+  medium_token: string,
+  database?: {
+      dev?: {
+          driver: string,
+          user: string,
+          database: string,
+          password: string,
+          hostname: string
+      },
+  
+      production?: {
+          driver: string,
+          user: string,
+          database: string,
+          password: string,
+          hostname: string
+      }
+  }
+}
+
+
 export abstract class BaseController {
   static routes: Route[] = []
 
