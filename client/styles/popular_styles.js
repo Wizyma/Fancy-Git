@@ -38,6 +38,11 @@ export const Img = styled.img `
     max-width: 150px;
     border-radius: 50%;
 `
+export const ImgProfil = styled.img `
+    max-width: 150px;
+    height: 100px;
+    border-radius: 50%;
+`
 
 export const PopularTitle = styled.h2 `
     width: 100%;

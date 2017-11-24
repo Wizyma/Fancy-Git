@@ -4,3 +4,4 @@ dist-desktop/
 dist-server/
 package-lock.json
 config.json
+/nbproject/private/

@@ -3,6 +3,7 @@ import ReactTooltip from 'react-tooltip'
 import { PopularDiv, PopularElem, PopularContainer, Img, PopularButton, PopularName } from '../../styles/popular_styles'
 
 export const BuildResultUsers = (data) => {
+    
   const datas = data.props
   return(
     <PopularDiv>
