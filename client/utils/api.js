@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
+const fetch = require('graphql-fetch')('http://localhost:1339/graphql')
 
 class GitAPI {
   constructor() {
@@ -221,6 +222,38 @@ class GitAPI {
       `
     })
     .then((res) => res.data)
+  }
+
+  getMediumPosts = (tag) => {
+    const query = `
+      query Post($tag: String!, $limit: Int){
+        allPosts(tag: $tag, limit: $limit){
+          id,
+          url,
+          title,
+          content{
+            subtitle
+          },
+          virtuals{
+            previewImage{
+              imageId
+            }
+          }
+        }
+      }
+    `
+    const queryVars = {
+      "tag": tag,
+      "limit": 20
+    }
+
+    fetch(query, queryVars).then((results) => {
+      if (results.errors) {
+        //...
+        return
+      }
+      return results.data
+    })
   }
 }
 

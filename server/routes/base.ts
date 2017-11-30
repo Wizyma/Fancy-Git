@@ -11,21 +11,21 @@ export interface Config {
   token: string,
   medium_token: string,
   database?: {
-      dev?: {
-          driver: string,
-          user: string,
-          database: string,
-          password: string,
-          hostname: string
-      },
+    dev?: {
+      driver: string,
+      user: string,
+      database: string,
+      password: string,
+      hostname: string,
+    },
   
-      production?: {
-          driver: string,
-          user: string,
-          database: string,
-          password: string,
-          hostname: string
-      }
+    production?: {
+      driver: string,
+      user: string,
+      database: string,
+      password: string,
+      hostname: string,
+    },
   }
 }
 
