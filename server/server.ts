@@ -4,15 +4,17 @@ import * as bodyParser from 'body-parser'
 import * as logger from 'morgan'
 import * as cors from 'cors'
 import { Main } from './routes/main'
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { db } from './models/index'
 // import * as cookieParser from 'cookie-parser' use later
 const schema = require('./graphql/schemas')
 const models = require('./models')
+const Sequelize = require('sequelize')
+
 
 
 interface ServerOptions {
-  readonly port?: number 
+  readonly port?: number
 }
 
 /**
@@ -26,7 +28,7 @@ export class Server {
   public options: ServerOptions
   public app: express.Application
 
-  constructor (options: ServerOptions) {
+  constructor(options: ServerOptions) {
     const defaults: ServerOptions = {
       port: 8080,
     }
@@ -43,7 +45,7 @@ export class Server {
    * 
    * @memberof Server
    */
-  private config () {
+  private config() {
     this.app.use(logger('dev'))
 
     this.app.use('*', cors())
@@ -51,21 +53,27 @@ export class Server {
     this.app.use(bodyParser.urlencoded())
     this.router()
     this.app.use('/graphql', graphqlExpress({ schema }))
-    db.authenticate()
-    .then(() => {
-      console.log('successful connection')
-    })
-    .catch((err) => {
-      console.log(err)
-    })
 
-    models.db.sync()
-    .then(() => {
-      console.log('Created table')
-    }).catch((err) => {
-      console.log(err,'something went wrong with the database update')
-    })
-    
+    db
+      .authenticate()
+      .then(() => {
+        console.log('Connection has been established successfully.');
+      })
+      .catch(err => {
+        console.error('Unable to connect to the database:', err);
+      });
+
+    db.import("./models/favorites");
+
+    db
+      .sync({ force: true })
+      .then(() => {
+        console.log('Tables created !');
+      })
+      .catch(err => {
+        console.error('Error when create tables : ', err);
+      });
+
     if (this.app.get('env') === 'development') {
       this.app.use('/graphiql', graphiqlExpress({
         endpointURL: '/graphql',
@@ -79,13 +87,13 @@ export class Server {
    * 
    * @memberof Server
    */
-  public run () {
+  public run() {
     this.app.listen(this.options.port, () => {
       console.log(`Started on port ${this.options.port}`)
     })
   }
 
-  public router () {
+  public router() {
     const router = express.Router()
 
     // main routes
