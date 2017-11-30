@@ -7,13 +7,16 @@ export class User extends Component{
     constructor(props){
         super(props)
         this.state = {
-         
+            
             datas: null,
           }
-        console.log(props)
+        console.log( props )
+        console.log( props.user )
     }
 
     componentDidMount() {
+        console.log('ici')
+        console.log(this.state.login)
         api.getInfoUser('jsparanoguy')
             .then(datas => {
                 this.setState({ datas })
