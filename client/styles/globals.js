@@ -45,6 +45,7 @@ export const Nav = styled(NavLink) `
 
 export const BackButton = styled.button `
 width: 90px;
+z-index: 9999;
 height: 32px;
 background-color: #fbfbfb;
 border: 1px solid;

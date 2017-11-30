@@ -214,9 +214,21 @@ class GitAPI {
              description
            }
          }
-         starredRepositories(first: 1){
-           totalCount
+         starredRepositories(first: 50){
+          totalCount
+         nodes{
+            name,
+            description,
+            owner{
+              avatarUrl, 
+              login
+            }
+            stargazers(first: 1){
+              totalCount
+            }
+            description
          }
+        }
        }
      }
       `

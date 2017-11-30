@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { api } from '../utils/api'
 import { Loading } from './loading'
-import { BuildResultUsersInfo } from './subcomponents/user_info'
+import { BuildResultUsersInfo, Owned } from './subcomponents/user_info'
+import { RepoDiv } from '../styles/repo_styles'
 
 export class User extends Component{
     constructor(props){
@@ -16,22 +17,22 @@ export class User extends Component{
     componentDidMount() {
         api.getInfoUser(this.state.name)
             .then(datas => {
-                this.setState({ datas })
+                this.setState({ datas: datas.data.user })
               })
 
               
     }
 
-    render(){
-
-        console.log(this.state.datas)
-
-  
+    render(){ 
+        const { datas } = this.state
         return(
-            <div>
-            <h1>Hello World</h1>
-           {this.state.datas  && <BuildResultUsersInfo props={this.state.datas} />} 
-            </div>
+            <RepoDiv>
+                {datas  && <BuildResultUsersInfo user={datas} />} 
+                {datas && datas.repositories.nodes.length >= 1 && 
+                    <div style={{width: '100%'}}>
+                        <Owned repos={datas.repositories.nodes} login={datas.login}/>
+                    </div> }
+            </RepoDiv>
         )
     }
 }
