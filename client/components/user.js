@@ -6,12 +6,11 @@ import { BuildResultUsersInfo } from './subcomponents/user_info'
 export class User extends Component{
     constructor(props){
         super(props)
+
         this.state = {
             name: props.location.state.name,
             datas: null,
           }
-        console.log( props )
-        console.log( props.user )
     }
 
     componentDidMount() {
