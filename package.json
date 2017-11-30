@@ -65,7 +65,7 @@
     "graphql": "^0.11.7",
     "graphql-fetch": "^1.0.1",
     "graphql-tools": "^2.6.1",
-    "medium-graphql": "^1.0.4",
+    "medium-graphql": "^2.0.0",
     "medium-sdk": "0.0.4",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
