@@ -15,6 +15,7 @@ export class Repo extends Component {
       this.state = {
         repo: props.location.state,
         repository: null,
+        medium: null,
         error: null
       } 
     }
@@ -28,11 +29,14 @@ export class Repo extends Component {
 
     api.getClickedRepository(login, name)
       .then(results => this.setState({ repository: results.data.repository, error: results.errors }))
+
+  {/* api.getMediumPosts('react')
+    .then(datas => console.log(datas)) */} 
   }
 
   
   render() {
-    const { repository, repo, error } = this.state
+    const { repository, repo, medium, error } = this.state
     return(
       <RepoDiv>
       <BackButton onClick={this.goBack}>Back</BackButton>

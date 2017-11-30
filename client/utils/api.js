@@ -5,16 +5,16 @@ class GitAPI {
   constructor() {
     this.getToken()
     this.instance = axios.create({
-      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json'  },
+      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json' },
     })
   }
 
   getToken = () => {
     if (!localStorage.getItem('token')) {
-      return axios.get('http://localhost:1339/token') 
-      .then((res) => {
-        localStorage.setItem('token', res.data.token)
-      })
+      return axios.get('http://localhost:1339/token')
+        .then((res) => {
+          localStorage.setItem('token', res.data.token)
+        })
     }
   }
 
@@ -54,10 +54,10 @@ class GitAPI {
             }
           }`,
     })
-    .then((res) => res.data.data.search.nodes)
+      .then((res) => res.data.data.search.nodes)
   }
 
-  searchUserOrRepo = (type, value)  => {
+  searchUserOrRepo = (type, value) => {
     // ADD :stars>${value} to search by "popularity"
     const request = type === 'REPOSITORY' ? `{
       search(type: REPOSITORY, query: "${value}", first: 50){
@@ -80,7 +80,7 @@ class GitAPI {
           } 
         }
       }
-    }` :  `{
+    }` : `{
       search(type: USER, query: "${value}", first: 50){
         nodes {
           ... on User {
@@ -96,7 +96,7 @@ class GitAPI {
     return this.instance.post('https://api.github.com/graphql', {
       query: request,
     })
-    .then((res) => res.data.data.search.nodes)
+      .then((res) => res.data.data.search.nodes)
   }
 
   getClickedRepository = (owner, repoName) => {
@@ -174,7 +174,7 @@ class GitAPI {
     return this.instance.post('https://api.github.com/graphql', {
       query: request,
     })
-    .then((res) => res.data)
+      .then((res) => res.data)
   }
 
   getInfoUser = (login) => {
@@ -221,10 +221,10 @@ class GitAPI {
      }
       `
     })
-    .then((res) => res.data)
+      .then((res) => res.data)
   }
 
-  getMediumPosts = (tag) => {
+  /*getMediumPosts = (tag) => {
     const query = `
       query Post($tag: String!, $limit: Int){
         allPosts(tag: $tag, limit: $limit){
@@ -246,15 +246,38 @@ class GitAPI {
       "tag": tag,
       "limit": 20
     }
-
-    fetch(query, queryVars).then((results) => {
-      if (results.errors) {
-        //...
-        return
+  */
+  getMediumPosts = (tag) => {
+    const query = `
+    query Post($tag: String!, $limit: Int){
+      allPosts(tag: $tag, limit: $limit){
+        url,
+        content{
+          subtitle
+        }
+        virtuals {
+          previewImage {
+            imageId
+          }
+        }
+        title,
+        id
       }
-      return results.data
-    })
-  }
-}
+    }
+    `
+    const queryVars = {
+      "tag": tag,
+      "limit": 20
+    }
 
-export const api = new GitAPI()
+      fetch(query, queryVars).then((results) => {
+        if (results.errors) {
+          //...
+          return
+        }
+        return results.data
+      })
+    }
+  }
+
+  export const api = new GitAPI()
