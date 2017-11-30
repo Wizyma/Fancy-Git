@@ -8,7 +8,7 @@ import { db } from './models/index'
 // import * as cookieParser from 'cookie-parser' use later
 const models = require('./models')
 const Sequelize = require('sequelize')
-import graphqHTTP from 'medium-graphql'
+import mediumServer from 'medium-graphql'
 
 
 interface ServerOptions {
@@ -60,7 +60,7 @@ export class Server {
         console.error('Unable to connect to the database:', err);
       });
 
-    db.import("./models/favorites");
+    db.import('./models/favorites')
 
     db
       .sync({ force: true })
@@ -69,9 +69,9 @@ export class Server {
       })
       .catch(err => {
         console.error('Error when create tables : ', err);
-      });
+      })
 
-    this.app.use('/graphql', graphqHTTP)
+    this.app.use('/graphql', mediumServer)
     this.app.use(this.notFoundMiddleware)
   }
 
