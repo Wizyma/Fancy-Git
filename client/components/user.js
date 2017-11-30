@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { api } from '../utils/api'
 import { Loading } from './loading'
-import { BuildResultUsersInfo } from './subcomponents/user_info'
+// import { BuildResultUsersInfo } from './subcomponents/user_info'
 
 export class User extends Component{
     constructor(props){
@@ -30,7 +30,6 @@ export class User extends Component{
         return(
             <div>
             <h1>Hello World</h1>
-           {this.state.datas  && <BuildResultUsersInfo props={this.state.datas} />} 
             </div>
         )
     }

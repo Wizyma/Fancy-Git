@@ -4,9 +4,9 @@ import * as bodyParser from 'body-parser'
 import * as logger from 'morgan'
 import * as cors from 'cors'
 import { Main } from './routes/main'
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import graphqHTTP from 'medium-graphql'
+
 // import * as cookieParser from 'cookie-parser' use later
-const schema = require('./graphql/schemas')
 
 
 interface ServerOptions {
@@ -48,13 +48,8 @@ export class Server {
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded())
     this.router()
-    this.app.use('/graphql', graphqlExpress({ schema }))
-    
-    if (this.app.get('env') === 'development') {
-      this.app.use('/graphiql', graphiqlExpress({
-        endpointURL: '/graphql',
-      }))
-    }
+    this.app.use('/graphql', graphqHTTP)
+  
     this.app.use(this.notFoundMiddleware)
   }
 
