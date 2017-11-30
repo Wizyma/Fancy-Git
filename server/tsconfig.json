@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
       "module": "commonjs", 
-      "target": "es6",
+      "target": "esnext",
       "outDir": "../dist-server",
       "noImplicitAny": true, 
       "moduleResolution": "node",
@@ -17,10 +17,11 @@
       },
       "lib": [
         "es2017",
+        "dom",
         "esnext.asynciterable"
     ]
     },
     "include": [
-      "src/**/*"
+      "./**/*"
     ]
 }

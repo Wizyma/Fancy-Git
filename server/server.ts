@@ -4,13 +4,11 @@ import * as bodyParser from 'body-parser'
 import * as logger from 'morgan'
 import * as cors from 'cors'
 import { Main } from './routes/main'
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { db } from './models/index'
 // import * as cookieParser from 'cookie-parser' use later
-const schema = require('./graphql/schemas')
 const models = require('./models')
 const Sequelize = require('sequelize')
-
+import graphqHTTP from 'medium-graphql'
 
 
 interface ServerOptions {
@@ -52,7 +50,6 @@ export class Server {
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded())
     this.router()
-    this.app.use('/graphql', graphqlExpress({ schema }))
 
     db
       .authenticate()
@@ -74,11 +71,7 @@ export class Server {
         console.error('Error when create tables : ', err);
       });
 
-    if (this.app.get('env') === 'development') {
-      this.app.use('/graphiql', graphiqlExpress({
-        endpointURL: '/graphql',
-      }))
-    }
+    this.app.use('/graphql', graphqHTTP)
     this.app.use(this.notFoundMiddleware)
   }
 

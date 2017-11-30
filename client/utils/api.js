@@ -1,17 +1,7 @@
 import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
-
-interface Results {
-  data : {
-    search :{
-      nodes: object[]|any,
-    },
-  }
-}
-
+const fetch = require('graphql-fetch')('http://localhost:1339/graphql')
 
 class GitAPI {
-  private instance: AxiosInstance
-
   constructor() {
     this.getToken()
     this.instance = axios.create({
@@ -22,13 +12,13 @@ class GitAPI {
   getToken = () => {
     if (!localStorage.getItem('token')) {
       return axios.get('http://localhost:1339/token') 
-      .then((res: AxiosResponse) => {
+      .then((res) => {
         localStorage.setItem('token', res.data.token)
       })
     }
   }
 
-  getPopularRepositories = (): Promise<any>  => {
+  getPopularRepositories = () => {
     return this.instance.post('https://api.github.com/graphql', {
       query: `{
             search(first: 50, type: REPOSITORY, query: "stars:>15000") {
@@ -64,10 +54,10 @@ class GitAPI {
             }
           }`,
     })
-    .then((res: AxiosResponse) => res.data.data.search.nodes)
+    .then((res) => res.data.data.search.nodes)
   }
 
-  searchUserOrRepo = (type: string, value: string): Promise<any>  => {
+  searchUserOrRepo = (type, value)  => {
     // ADD :stars>${value} to search by "popularity"
     const request = type === 'REPOSITORY' ? `{
       search(type: REPOSITORY, query: "${value}", first: 50){
@@ -106,10 +96,10 @@ class GitAPI {
     return this.instance.post('https://api.github.com/graphql', {
       query: request,
     })
-    .then((res: AxiosResponse) => res.data.data.search.nodes)
+    .then((res) => res.data.data.search.nodes)
   }
 
-  getClickedRepository = (owner: string, repoName: string): Promise<any> => {
+  getClickedRepository = (owner, repoName) => {
     const request = `
     query{
     repository(owner: "${owner}", name: "${repoName}"){
@@ -184,7 +174,86 @@ class GitAPI {
     return this.instance.post('https://api.github.com/graphql', {
       query: request,
     })
-    .then((res: AxiosResponse) => res.data)
+    .then((res) => res.data)
+  }
+
+  getInfoUser = (login) => {
+    console.log(login)
+    return this.instance.post('https://api.github.com/graphql', {
+      query: `query{
+        user(login: "${login}"){
+         avatarUrl,
+         name,
+         login,
+         repositories(first: 50){
+           nodes{
+             name,
+             createdAt,
+             stargazers{
+               totalCount
+             }
+             description
+             languages(first: 3){
+               nodes{
+                 name
+               }
+             }
+           }
+         }
+         contributedRepositories(first: 50){
+           nodes{
+             name,
+             description,
+             owner{
+               avatarUrl, 
+               login
+             }
+             stargazers(first: 1){
+               totalCount
+             }
+             description
+           }
+         }
+         starredRepositories(first: 1){
+           totalCount
+         }
+       }
+     }
+      `
+    })
+    .then((res) => res.data)
+  }
+
+  getMediumPosts = (tag) => {
+    const query = `
+      query Post($tag: String!, $limit: Int){
+        allPosts(tag: $tag, limit: $limit){
+          id,
+          url,
+          title,
+          content{
+            subtitle
+          },
+          virtuals{
+            previewImage{
+              imageId
+            }
+          }
+        }
+      }
+    `
+    const queryVars = {
+      "tag": tag,
+      "limit": 20
+    }
+
+    fetch(query, queryVars).then((results) => {
+      if (results.errors) {
+        //...
+        return
+      }
+      return results.data
+    })
   }
 }
 

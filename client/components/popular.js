@@ -1,30 +1,11 @@
-import * as React from 'react'
+import React, { Component } from 'react'
 import { api } from '../utils/api'
 import { Loading } from './loading'
 import { BuildPopular } from './subcomponents/popular_grid'
 import { SearchButton } from '../styles/globals'
 
-export interface State {
-  data?: object[],
-  search: boolean,
-}
-
-export interface Props extends React.Props<any> {
-  defaultData?: object[]|null,
-  url?: string
-}
-
-
-
-
-export class Popular extends React.Component <Props[], State> {
-  public state: State[]|any = {
-    data: null,
-  }
-
-  public props: Props[]|any 
-  
-  constructor(props: Props[]) {
+export class Popular extends Component {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -34,12 +15,12 @@ export class Popular extends React.Component <Props[], State> {
 
   componentDidMount() {
     api.getPopularRepositories()
-      .then((res: object[]) => {
+      .then((res) => {
         this.setState({ data: res })
       })
   }
 
-  searchItems = (event: any) => {
+  searchItems = (event) => {
 
   }
 

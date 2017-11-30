@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { Component } from 'react'
 import { Ul, Li, Nav as NavLink } from '../styles/globals'
 
 export const Nav = () => (
