@@ -44,7 +44,7 @@ export const BuildResultUsersInfo = (data) => {
                               
                               <strong>{user.repositories.nodes[i].name}</strong></span><br/> <br/>
                           
-                                <span>{user.repositories.nodes[i].languages.nodes[0].name}</span>
+                                {/* bug language <span>{user.repositories.nodes[i].languages.nodes[0].name}</span>*/}
                             
                                 
                             
@@ -85,7 +85,7 @@ export const BuildResultUsersInfo = (data) => {
                             
                         
                     </PopularName>
-                    <PopularP style={{ height: 'auto' }}><br/>{emoji.emojify(user.contributedRepositories.nodes[i].description)}</PopularP>
+                    <PopularP style={{ height: 'auto', marginTop: '130px' }}><br/>{emoji.emojify(user.contributedRepositories.nodes[i].description)}</PopularP>
                    
 
             
