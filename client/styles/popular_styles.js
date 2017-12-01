@@ -97,3 +97,22 @@ export const PopularRank = styled.span `
     margin-top: -25px;
     font-weight: 700;
 `
+
+export const PopularButtonMargin = styled(Link) `
+width: 90px;
+padding: 6px;
+position: absolute;
+margin-top: 28px;
+background-color: #fbfbfb;
+border: 1px solid;
+border-radius: 15px;
+font-weight: 700;
+text-decoration: none;
+border-color: black;
+color: black;
+font-size: 15px;
+&:hover {
+    background-color: #f9f3f3;
+    cursor: pointer;
+}
+`

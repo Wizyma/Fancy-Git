@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { api } from '../utils/api'
 import { Loading } from './loading'
-import { BuildResultUsersInfo, Owned } from './subcomponents/user_info'
+import { BuildResultUsersInfo, Owned, Contributed } from './subcomponents/user_info'
 import { RepoDiv } from '../styles/repo_styles'
 
 export class User extends Component{
@@ -11,6 +11,7 @@ export class User extends Component{
         this.state = {
             name: props.location.state.name,
             datas: null,
+            switchrepos: false
           }
     }
 
@@ -23,14 +24,21 @@ export class User extends Component{
               
     }
 
+    switchRepos = () => {
+        this.setState((prevState) => ({switchrepos: !prevState.switchrepos}))
+    }
+
     render(){ 
-        const { datas } = this.state
+        const { datas, switchrepos } = this.state
+        console.log(datas)
         return(
             <RepoDiv>
                 {datas  && <BuildResultUsersInfo user={datas} />} 
                 {datas && datas.repositories.nodes.length >= 1 && 
                     <div style={{width: '100%'}}>
-                        <Owned repos={datas.repositories.nodes} login={datas.login}/>
+                        <button onClick={this.switchRepos}>Switch</button>
+                        {!switchrepos && <Owned repos={datas.repositories.nodes} login={datas.login} />}
+                        {switchrepos && <Contributed repos={datas.starredRepositories.nodes} login={datas.login}/>}
                     </div> }
             </RepoDiv>
         )

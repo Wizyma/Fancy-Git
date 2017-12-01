@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactTooltip from 'react-tooltip' 
 import moment from 'moment'
 import { Container } from '../../styles/clicked_repo'
-import { Img, PopularButton } from '../../styles/popular_styles'
+import { Img, PopularButtonMargin } from '../../styles/popular_styles'
 const emoji = require('node-emoji')
 
 export const BuildResultUsersInfo = ({ user }) => {
@@ -24,7 +24,7 @@ export const BuildResultUsersInfo = ({ user }) => {
   )
 }
 
-export const Owned = ({repos, login}) => console.log(repos) || (
+export const Owned = ({repos, login}) => (
     <Container style={{position: 'relative', maxHeight: '400px', overflowY: 'scroll'}}>
         <h2 style={{textAlign: 'center'}}>Owned Repositories</h2>
         <div style={{position: 'relative'}}>
@@ -44,9 +44,35 @@ export const Owned = ({repos, login}) => console.log(repos) || (
                 {elem.description && <div style={{maxWidth: '350px'}}>
                     <span>{elem.description}</span>    
                 </div>}
-                <div style={{marginLeft: elem.languages.nodes.length === 0 ? '120px': ''}}>
+                <div>
                     {elem.languages.nodes.length >= 1 && <span>Lang : {elem.languages.nodes[0].name}</span>}
-                    <PopularButton to={{  exact: true, pathname: '/repo', state:  { login: login, name: elem.name } }}>More...</PopularButton>
+                    <PopularButtonMargin to={{  exact: true, pathname: '/repo', state:  { login: login, name: elem.name } }}>More...</PopularButtonMargin>
+                </div>
+            </div>
+        ))}
+        </div>
+    </Container>
+)
+
+export const Contributed = ({ repos, login }) => (
+    <Container style={{position: 'relative', maxHeight: '400px', overflowY: 'scroll'}}>
+        <h2 style={{textAlign: 'center'}}>Starred Repositories</h2>
+        <div style={{position: 'relative'}}>
+        {repos.map((elem, i) => (
+            <div key={i} style={{marginBottom: '50px'}}>  
+                <div style={{display: 'flex'}}>
+                    <div>
+                        <h3 style={{width: '250px'}}>{elem.name}</h3>
+                    </div>
+                </div> 
+                <div style={{marginTop: '10px', marginBottom: '10px'}}>
+                    {login !== elem.owner.login ? <Img src={elem.owner.avatarUrl} />: <img style={{borderRadius: '50%', height: '170px', width: '170px'}} src='client/styles/dio.gif'/>}
+                </div>
+                {elem.description && <div style={{maxWidth: '350px'}}>
+                    <span>{elem.description}</span>    
+                </div>}
+                <div>
+                    <PopularButtonMargin to={{  exact: true, pathname: '/repo', state:  { login: login, name: elem.name } }}>More...</PopularButtonMargin>
                 </div>
             </div>
         ))}
