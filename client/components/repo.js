@@ -9,8 +9,7 @@ import { Loading } from './loading'
 
 export class Repo extends Component {
   constructor(props) {
-    super(props)  
-    
+    super(props)
 
     if (props.location) {
       this.state = {
@@ -20,7 +19,7 @@ export class Repo extends Component {
         error: null
       } 
     }
-    console.log(this.state)
+
     this.goBack = () =>  props.history.goBack()
     
   }
@@ -33,17 +32,14 @@ export class Repo extends Component {
       this.setState({repository: data[0].data.repository, error: data[0].errors, medium: data[1] ? data[1].data.allPosts: null})
     })
 
-
-      api.getMediumPosts('react')
-      .then(results => this.setState({ medium : results  }))
+  {/* api.getMediumPosts('react')
+    .then(datas => console.log(datas)) */} 
   }
-
 
   
   render() {
     console.log(this.state)
     const { repository, repo, medium, error } = this.state
-    console.log(this.state)
     return(
       <RepoDiv>
       <BackButton onClick={this.goBack}>Back</BackButton>
