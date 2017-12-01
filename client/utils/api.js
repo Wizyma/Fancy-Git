@@ -1,12 +1,68 @@
-import axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
-const fetch = require('graphql-fetch')('http://localhost:1339/graphql')
+require('isomorphic-fetch') // injects globals: fetch, Headers, Request, Response
+
+var assert = require('assert')
+var defaults = require('101/defaults')
+
+/**
+ * create a graphql-fetch bound to a specific graphql url
+ * @param  {String} graphqlUrl
+ * @return {Function} graphqlFetch
+ */
+const factory = (graphqlUrl) => {
+  /**
+   * graphql fetch - fetch w/ smart defaults for graphql requests
+   * @param  {Query} query graphql query
+   * @param  {Object} vars  graphql query args
+   * @param  {Object} opts  fetch options
+   * @return {FetchPromise} fetch promise
+   */
+  const graphqlFetch = (query, vars, opts) => {
+    assert(query, 'query is required')
+    vars = vars || {}
+    opts = opts || {}
+    opts.body = JSON.stringify({
+      query: query,
+      variables: vars
+    })
+ 
+    let check = typeof(opts.get) === 'undefined' ? true : false
+ 
+    if(check){
+      // default opts
+      defaults(opts, {
+        method: 'POST',
+        headers: new Headers()
+      })
+      // default headers
+      if (!opts.headers.get('content-type')) {
+        opts.headers.append('content-type', 'application/json') 
+      }
+    } 
+
+    return fetch(graphqlUrl, !check ? {
+      method: 'Post',
+      headers: {
+        "Content-type": opts.get('Content-type'),
+        "Authorization": opts.get('Authorization'),
+      },
+      body: opts.body
+    }: opts).then(function (res) {
+      return res.json()
+    })
+  }
+
+  return graphqlFetch
+}
+
+const medium = factory('http://localhost:1339/graphql')
+const github = factory('https://api.github.com/graphql')
 
 class GitAPI {
   constructor() {
     this.getToken()
-    this.instance = axios.create({
-      headers: { Authorization: localStorage.getItem('token'), 'Content-Type': 'application/json' },
-    })
+    this.headers = new Headers()
+    this.headers.append('Authorization', localStorage.getItem('token'))
+    this.headers.append('Content-Type', 'application/json')
   }
 
   getToken = () => {
@@ -19,47 +75,46 @@ class GitAPI {
   }
 
   getPopularRepositories = () => {
-    return this.instance.post('https://api.github.com/graphql', {
-      query: `{
-            search(first: 50, type: REPOSITORY, query: "stars:>15000") {
+    const query = `{
+      search(first: 50, type: REPOSITORY, query: "stars:>15000") {
+        nodes {
+          ... on Repository {
+            name,
+            forks {
+              totalCount
+            },
+            watchers {
+              totalCount
+            },
+            stargazers {
+              totalCount
+            },
+            languages(first: 1, orderBy: {field: SIZE, direction: DESC}) {
               nodes {
-                ... on Repository {
-                  name,
-                  forks {
-                    totalCount
-                  },
-                  watchers {
-                    totalCount
-                  },
-                  stargazers {
-                    totalCount
-                  },
-                  languages(first: 1, orderBy: {field: SIZE, direction: DESC}) {
-                    nodes {
-                      name
-                    }
-                  },
-                  description,
-                  owner {
-                    avatarUrl,
-                    __typename,
-                    login
-                  }
-                  hasIssuesEnabled,
-                  issues {
-                    totalCount
-                  }
-                }
+                name
               }
+            },
+            description,
+            owner {
+              avatarUrl,
+              __typename,
+              login
             }
-          }`,
-    })
-      .then((res) => res.data.data.search.nodes)
+            hasIssuesEnabled,
+            issues {
+              totalCount
+            }
+          }
+        }
+      }
+    }`
+
+    return github(query, {}, this.headers)
   }
 
   searchUserOrRepo = (type, value) => {
     // ADD :stars>${value} to search by "popularity"
-    const request = type === 'REPOSITORY' ? `{
+    const query = type === 'REPOSITORY' ? `{
       search(type: REPOSITORY, query: "${value}", first: 50){
         nodes {
           ... on Repository {
@@ -93,15 +148,12 @@ class GitAPI {
       }
     }`
 
-    return this.instance.post('https://api.github.com/graphql', {
-      query: request,
-    })
-      .then((res) => res.data.data.search.nodes)
+    return github(query, {}, this.headers)
   }
 
   getClickedRepository = (owner, repoName) => {
-    const request = `
-    query{
+    const query = `
+    {
     repository(owner: "${owner}", name: "${repoName}"){
       createdAt,
       name,
@@ -171,69 +223,64 @@ class GitAPI {
   }
     `
 
-    return this.instance.post('https://api.github.com/graphql', {
-      query: request,
-    })
-      .then((res) => res.data)
+    return github(query, {}, this.headers)
   }
 
   getInfoUser = (login) => {
-    console.log(login)
-    return this.instance.post('https://api.github.com/graphql', {
-      query: `query{
-        user(login: "${login}"){
-         avatarUrl,
-         name,
-         login,
-         repositories(first: 50){
-           nodes{
-             name,
-             createdAt,
-             stargazers{
-               totalCount
-             }
-             description
-             languages(first: 3){
-               nodes{
-                 name
-               }
-             }
-           }
-         }
-         contributedRepositories(first: 50){
-           nodes{
-             name,
-             description,
-             owner{
-               avatarUrl, 
-               login
-             }
-             stargazers(first: 1){
-               totalCount
-             }
-             description
-           }
-         }
-         starredRepositories(first: 50){
-          totalCount
+    const query = `{
+      user(login: "${login}"){
+       avatarUrl,
+       name,
+       login,
+       repositories(first: 50){
          nodes{
-            name,
-            description,
-            owner{
-              avatarUrl, 
-              login
-            }
-            stargazers(first: 1){
-              totalCount
-            }
-            description
+           name,
+           createdAt,
+           stargazers{
+             totalCount
+           }
+           description
+           languages(first: 3){
+             nodes{
+               name
+             }
+           }
          }
-        }
        }
+       contributedRepositories(first: 50){
+         nodes{
+           name,
+           description,
+           owner{
+             avatarUrl, 
+             login
+           }
+           stargazers(first: 1){
+             totalCount
+           }
+           description
+         }
+       }
+       starredRepositories(first: 50){
+        totalCount
+       nodes{
+          name,
+          description,
+          owner{
+            avatarUrl, 
+            login
+          }
+          stargazers(first: 1){
+            totalCount
+          }
+          description
+       }
+      }
      }
-      `
-    })
-      .then((res) => res.data)
+   }
+    `
+
+    return github(query, {}, this.headers)
   }
 
   /*getMediumPosts = (tag) => {
@@ -282,7 +329,7 @@ class GitAPI {
         "limit": 20
       }
 
-      return fetch(query, queryVars)
+      return medium(query, queryVars)
     }
   }
 

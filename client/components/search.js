@@ -22,8 +22,8 @@ export class Search extends Component {
   searchItems = (value) => {
     this.timeOutSearch = window.setTimeout(() => {
       api.searchUserOrRepo(this.state.selected, value)
-      .then((data) => {
-        this.setState({ data })
+      .then((res) => {
+        this.setState({ data: res.data.search.nodes })
       })
     },                                     500) 
   }

@@ -16,7 +16,8 @@ export class Popular extends Component {
   componentDidMount() {
     api.getPopularRepositories()
       .then((res) => {
-        this.setState({ data: res })
+        console.log(res)
+        this.setState({ data: res.data.search.nodes })
       })
   }
 
