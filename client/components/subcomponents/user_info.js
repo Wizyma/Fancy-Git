@@ -7,6 +7,7 @@ const emoji = require('node-emoji')
 
 export const BuildResultUsersInfo = ({ user }) => {
     const { avatarUrl, login, name, repositories, starredRepositories } = user
+    console.log(name)
     console.log(user)
   return(
    <Container>
@@ -23,7 +24,7 @@ export const BuildResultUsersInfo = ({ user }) => {
   )
 }
 
-export const Owned = ({repos, login}) => (
+export const Owned = ({repos, login}) => console.log(repos) || (
     <Container style={{position: 'relative', maxHeight: '400px', overflowY: 'scroll'}}>
         <h2 style={{textAlign: 'center'}}>Owned Repositories</h2>
         <div style={{position: 'relative'}}>
@@ -43,8 +44,8 @@ export const Owned = ({repos, login}) => (
                 {elem.description && <div style={{maxWidth: '350px'}}>
                     <span>{elem.description}</span>    
                 </div>}
-                <div>
-                    <span>Lang : {elem.languages.nodes[0].name}</span>
+                <div style={{marginLeft: elem.languages.nodes.length === 0 ? '120px': ''}}>
+                    {elem.languages.nodes.length >= 1 && <span>Lang : {elem.languages.nodes[0].name}</span>}
                     <PopularButton to={{  exact: true, pathname: '/repo', state:  { login: login, name: elem.name } }}>More...</PopularButton>
                 </div>
             </div>
