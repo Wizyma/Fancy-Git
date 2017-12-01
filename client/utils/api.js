@@ -261,34 +261,28 @@ class GitAPI {
   */
   getMediumPosts = (tag) => {
     const query = `
-    query Post($tag: String!, $limit: Int){
-      allPosts(tag: $tag, limit: $limit){
-        url,
-        content{
-          subtitle
-        }
-        virtuals {
-          previewImage {
-            imageId
+      query Post($tag: String!, $limit: Int){
+        allPosts(tag: $tag, limit: $limit){
+          url,
+          content{
+            subtitle
           }
+          virtuals {
+            previewImage {
+              imageId
+            }
+          }
+          title,
+          id
         }
-        title,
-        id
       }
-    }
-    `
-    const queryVars = {
-      "tag": tag,
-      "limit": 20
-    }
+      `
+      const queryVars = {
+        "tag": tag,
+        "limit": 20
+      }
 
-      fetch(query, queryVars).then((results) => {
-        if (results.errors) {
-          //...
-          return
-        }
-        return results.data
-      })
+      return fetch(query, queryVars)
     }
   }
 

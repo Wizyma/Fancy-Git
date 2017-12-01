@@ -27,8 +27,10 @@ export class Repo extends Component {
   componentDidMount() {
     const { login, name } = this.state.repo
 
-    api.getClickedRepository(login, name)
-      .then(results => this.setState({ repository: results.data.repository, error: results.errors }))
+    Promise.all([api.getClickedRepository(login, name), api.getMediumPosts('react')])
+    .then(data => {
+      this.setState({repository: data[0].data.repository, error: data[0].errors, medium: data[1] ? data[1].data.allPosts: null})
+    })
 
   {/* api.getMediumPosts('react')
     .then(datas => console.log(datas)) */} 
@@ -36,6 +38,7 @@ export class Repo extends Component {
 
   
   render() {
+    console.log(this.state)
     const { repository, repo, medium, error } = this.state
     return(
       <RepoDiv>
