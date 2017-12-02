@@ -11,7 +11,7 @@ export const SingleRepo = ({ repo }) => console.log(repo) || (
             <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount}</span> {emoji.emojify(':star:')}</span>
 
         </div>
-        <h4 style={{textAlign:'center', marginLeft:'20%'}}>Additional info :</h4>
+        <h4 style={{ textAlign: 'center', marginLeft: '20%' }}>Additional info :</h4>
         <ul id='allContent' style={{ display: 'inline-flex', listStyle: 'none', width: '100%' }}>
             <li style={{ borderRight: '1px solid lightgray', paddingRight: '50px', marginRight: '20px' }}>
 
@@ -46,8 +46,31 @@ export const SingleRepo = ({ repo }) => console.log(repo) || (
 
         </ul>
 
-    </Container>
-
-
-
+        </Container>
 )
+
+export const RepoPosts = ({ medium }) =>  console.log(medium) || (
+
+    <Container>
+    <div style={{overflowY: 'scroll', height: '500px'}}>
+    <h3> Posts </h3>
+        
+            <ul>
+                
+                {                  
+                    medium.map((elem, i) => (
+                    <li style={{ marginBottom: '30px', marginRight: '30px', listStyle: 'none', padding: '20px',border: '1px solid lightgray', background: 'burlywood', borderRadius: '25px'}} key={i}> 
+                    
+                    <h3 style={{borderBottom: '2px solid lightgrey'}}> {elem.title} </h3>
+                    <a style={{textDecoration: 'none'}} target='__blank' href={elem.url} >{elem.content.subtitle}</a>
+                    
+                    
+                     </li>
+                ))}
+
+            </ul>
+
+    </div>
+
+</Container>
+  )
