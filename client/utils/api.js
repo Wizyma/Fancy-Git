@@ -283,7 +283,7 @@ class GitAPI {
     return github(query, {}, this.headers)
   }
 
-  /*getMediumPosts = (tag) => {
+  getMediumPosts = (tag) => {
     const query = `
       query Post($tag: String!, $limit: Int){
         allPosts(tag: $tag, limit: $limit){
@@ -305,29 +305,6 @@ class GitAPI {
       "tag": tag,
       "limit": 20
     }
-  */
-  getMediumPosts = (tag) => {
-    const query = `
-      query Post($tag: String!, $limit: Int){
-        allPosts(tag: $tag, limit: $limit){
-          url,
-          content{
-            subtitle
-          }
-          virtuals {
-            previewImage {
-              imageId
-            }
-          }
-          title,
-          id
-        }
-      }
-      `
-      const queryVars = {
-        "tag": tag,
-        "limit": 20
-      }
 
       return medium(query, queryVars)
     }

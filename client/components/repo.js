@@ -30,15 +30,15 @@ export class Repo extends Component {
 
     api.getClickedRepository(login, name)
     .then(res => {
-      if(res.data.repository.stargazers.totalCount >= 20000){
-        return {tofetch: res.data.repository.name, data}
+      if(res.data.repository.stargazers.totalCount >= 20000 ){
+        return {tofetch: res.data.repository.name, repository: res}
       }
       return {tofetch: res.data.repository.primaryLanguage.name, repository: res}
     })
     .then(obj => {
-      console.log(obj.tofetch)
+      console.log(obj)
       api.getMediumPosts(obj.tofetch.toLowerCase())
-        .then(posts => console.log('YOO', posts) || this.setState({repository: obj.repository.data.repository, error: obj.repository.errors, medium: posts ?posts.data.allPosts: null}))
+        .then(posts => this.setState({repository: obj.repository.data.repository, error: obj.repository.errors, medium: posts ?posts.data.allPosts: null}))
     })
 
   {/* api.getMediumPosts('react')
