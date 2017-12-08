@@ -57,7 +57,6 @@ export class Server {
     this.app.use(passport.initialize())
     this.app.use(passport.session())
     this.app.use(flash())
-    this.app.use('/', express.static(path.join(__dirname, 'static/')))
     this.router()
 
     db

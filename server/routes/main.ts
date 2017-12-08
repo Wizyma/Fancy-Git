@@ -14,15 +14,10 @@ export class Main extends BaseController {
   }
 
   static routes: Route[] = [
-    { verb: 'get', path: '/', action: 'app' },
     { verb: 'get', path: '/token', action: 'index' },
   ]
   
   private index = (req: Request, res: Response) => {
     res.json({ token: this.config.token })
-  }
-
-  private app = (req: Request, res: Response, next: NextFunction) => {
-    res.send('ok')
   }
 }
