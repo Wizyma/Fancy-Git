@@ -3,12 +3,16 @@ import * as path from 'path'
 import * as bodyParser from 'body-parser'
 import * as logger from 'morgan'
 import * as cors from 'cors'
+import * as passport from 'passport'
 import { Main } from './routes/main'
 import { db } from './models/index'
+import { Github } from './routes/github'
 // import * as cookieParser from 'cookie-parser' use later
 const models = require('./models')
 const Sequelize = require('sequelize')
-import mediumServer from 'medium-graphql'
+const mediumServer = require('medium-graphql').default
+const session = require('express-session')
+const flash = require('connect-flash')
 
 
 interface ServerOptions {
@@ -49,26 +53,31 @@ export class Server {
     this.app.use('*', cors())
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded())
+    this.app.use(session({ secret: 'cats', resave: true, saveUninitialized: true }))
+    this.app.use(passport.initialize())
+    this.app.use(passport.session())
+    this.app.use(flash())
+    this.app.use('/', express.static(path.join(__dirname, 'static/')))
     this.router()
 
     db
       .authenticate()
       .then(() => {
-        console.log('Connection has been established successfully.');
+        console.log('Connection has been established successfully.')
       })
-      .catch(err => {
-        console.error('Unable to connect to the database:', err);
-      });
+      .catch((err : any) => {
+        console.error('Unable to connect to the database:', err)
+      })
 
     db.import('./models/favorites')
 
     db
       .sync({ force: true })
       .then(() => {
-        console.log('Tables created !');
+        console.log('Tables created !')
       })
-      .catch(err => {
-        console.error('Error when create tables : ', err);
+      .catch((err: any) => {
+        console.error('Error when create tables : ', err)
       })
 
     this.app.use('/graphql', mediumServer)
@@ -92,7 +101,12 @@ export class Server {
     // main routes
     const main = new Main()
     const mainRoutes = Main.connect(router, main)
+
+    // github routes
+    const git = new Github()
+    const gitRoutes = Github.connect(router, git)
     this.app.use(mainRoutes)
+    this.app.use(gitRoutes)
   }
 
   /**

@@ -7,8 +7,6 @@ const emoji = require('node-emoji')
 
 export const BuildResultUsersInfo = ({ user }) => {
     const { avatarUrl, login, name, repositories, starredRepositories } = user
-    console.log(name)
-    console.log(user)
   return(
    <Container>
         <div style={{width: '350px'}}>

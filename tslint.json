@@ -7,6 +7,8 @@
       "indent": [true, "spaces", 4],
       "jsdoc-format": true,
       "max-line-length": false,
-      "variable-name": false
+      "variable-name": false,
+      "align": false,
+      "ter-prefer-arrow-callback": false
     }
 }

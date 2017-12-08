@@ -1,6 +1,5 @@
 import { BaseController, Route, Config } from './base'
-import { Router, Request, Response } from 'express'
-import axios from 'axios'
+import { Router, Request, Response, NextFunction } from 'express'
 import * as path from 'path'
 
 export class Main extends BaseController {
@@ -15,10 +14,15 @@ export class Main extends BaseController {
   }
 
   static routes: Route[] = [
+    { verb: 'get', path: '/', action: 'app' },
     { verb: 'get', path: '/token', action: 'index' },
   ]
   
   private index = (req: Request, res: Response) => {
     res.json({ token: this.config.token })
+  }
+
+  private app = (req: Request, res: Response, next: NextFunction) => {
+    res.send('ok')
   }
 }

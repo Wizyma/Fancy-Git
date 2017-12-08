@@ -5,3 +5,4 @@ dist-server/
 package-lock.json
 config.json
 /nbproject/private/
+server/static/

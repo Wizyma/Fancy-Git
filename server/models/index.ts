@@ -9,7 +9,7 @@ export const db = new Sequelize(
     config.database,
     config.user,
     config.password, {
-        host: config.hostname,
-        dialect: config.driver,
+      host: config.hostname,
+      dialect: config.driver,
     },
 )

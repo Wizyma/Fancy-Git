@@ -4,12 +4,15 @@ export interface Route {
   path: string,
   action: string,
   verb: string,
+  middleware?: any,
 }
 
 export interface Config {
   uri: string,
   token: string,
   medium_token: string,
+  gitClientId: string,
+  gitSecret: string,
   database?: {
     dev?: {
       driver: string,
@@ -43,6 +46,11 @@ export abstract class BaseController {
     }
 
     const rt: Router[] = routes.map((route: Route) => {
+      if (route.middleware) {
+        return router[route.verb](route.path, route.middleware, (req: Request, res: Response) => {
+          instance[route.action](req, res)
+        })
+      }
       return router[route.verb](route.path, (req: Request, res: Response) => {
         instance[route.action](req, res)
       })
