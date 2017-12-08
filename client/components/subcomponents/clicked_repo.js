@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 const emoji = require('node-emoji')
-import { Container } from '../../styles/clicked_repo'
+import { Container, ContainerMedium } from '../../styles/clicked_repo'
 import { PopularDiv, PopularStars, PopularP, PopularElem, PopularContainer, ImgProfil, Img, PopularButton, PopularName } from '../../styles/popular_styles'
 
 
@@ -51,19 +51,21 @@ export const SingleRepo = ({ repo }) => console.log(repo) || (
 
 export const RepoPosts = ({ medium }) =>  console.log(medium) || (
 
-    <Container>
+    <ContainerMedium>
     <div style={{overflowY: 'scroll', height: '500px'}}>
     <h3> Posts </h3>
         
-            <ul>
+            <ul style={{marginRight: '70px'}}>
                 
                 {                  
                     medium.map((elem, i) => (
-                    <li style={{ marginBottom: '30px', marginRight: '30px', listStyle: 'none', padding: '20px',border: '1px solid lightgray', background: 'burlywood', borderRadius: '25px'}} key={i}> 
-                    
-                    <h3 style={{borderBottom: '2px solid lightgrey'}}> {elem.title} </h3>
-                    <a style={{textDecoration: 'none'}} target='__blank' href={elem.url} >{elem.content.subtitle}</a>
-                    
+                    <li style={{ marginBottom: '30px', marginRight: '30px', listStyle: 'none', padding: '20px',border: '1px solid lightgray', width: '100%'}} key={i}> 
+                    <div style={{    margin: '0px -21px'}}><img style={{height: '10%', width:'100%', position: 'relative', top: '-20px'}} src={'https://cdn-images-1.medium.com/fit/t/1600/480/' + elem.virtuals.previewImage.imageId} /> </div>
+                   
+                   <div >
+                    <h4 style={{borderBottom: '2px solid lightgrey'}}> {elem.title} </h4>
+                    <a style={{textDecoration: 'none', color: 'cadetblue'}} target='__blank' href={elem.url} >{elem.content.subtitle}</a>
+                    </div>
                     
                      </li>
                 ))}
@@ -72,5 +74,5 @@ export const RepoPosts = ({ medium }) =>  console.log(medium) || (
 
     </div>
 
-</Container>
+</ContainerMedium>
   )
