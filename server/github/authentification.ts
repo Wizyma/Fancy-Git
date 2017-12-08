@@ -14,10 +14,10 @@ passport.use(new GitHubStrategy({
   callbackURL: 'https://415ed58f.ngrok.io/logged',
   passReqToCallback : true,
 },
-(req: any, accessToken: any, refreshToken: any, profile: any, done: any) => {
+(req: any, accessToken: string, refreshToken: string, profile: any, done: Function) => {
   console.log(done)
   return User.models.Favorites.findOrCreate({ where: { UserID: profile.id }, defaults: { UserID: profile.id } })
-  .spread((user: any, created: any) => {
+  .spread((user: any, created: boolean) => {
     return done(null, profile)
   })
 }))
