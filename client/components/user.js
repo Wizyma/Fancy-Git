@@ -4,6 +4,8 @@ import { Loading } from './loading'
 import { BuildResultUsersInfo, Owned, Contributed } from './subcomponents/user_info'
 import { RepoDiv } from '../styles/repo_styles'
 
+
+
 export class User extends Component{
     constructor(props){
         super(props)
@@ -34,11 +36,13 @@ export class User extends Component{
         return(
             <RepoDiv>
                 {datas  && <BuildResultUsersInfo user={datas} />} 
+                {!datas && <Loading speed={500} text='Loading' />}
                 {datas && datas.repositories.nodes.length >= 1 && 
                     <div style={{width: '100%'}}>
                         <button onClick={this.switchRepos}>Switch</button>
                         {!switchrepos && <Owned repos={datas.repositories.nodes} login={datas.login} />}
                         {switchrepos && <Contributed repos={datas.starredRepositories.nodes} login={datas.login}/>}
+                       
                     </div> }
             </RepoDiv>
         )
