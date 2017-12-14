@@ -11,14 +11,14 @@ const config: Config = require(config_path)
 passport.use(new GitHubStrategy({
   clientID: config.gitClientId,
   clientSecret: config.gitSecret,
-  callbackURL: 'https://415ed58f.ngrok.io/logged',
+  callbackURL: 'https://2f18534e.ngrok.io/logged',
   passReqToCallback : true,
 },
 (req: any, accessToken: string, refreshToken: string, profile: any, done: Function) => {
-  console.log(done)
+  console.log(accessToken, refreshToken)
   return User.models.Favorites.findOrCreate({ where: { UserID: profile.id }, defaults: { UserID: profile.id } })
   .spread((user: any, created: boolean) => {
-    return done(null, profile)
+    return done(null, accessToken)
   })
 }))
 

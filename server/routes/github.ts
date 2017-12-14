@@ -11,8 +11,7 @@ export class Github extends BaseController {
   static routes: Route[] = [
     { verb: 'get', path: '/login', action: 'authenticate', 
       middleware: passport.authenticate('github', 
-        { scope: ['user:email', 'user:follow'],
-          successFlash: 'Welcome!' }) },
+        { scope: ['user:email', 'user:follow', 'repo', 'public_repo'] }) },
     { verb: 'get', path: '/logout', action: 'logout' },
     { verb: 'get', path: '/logged', action: 'logged', 
       middleware: passport.authenticate('github', 
@@ -26,7 +25,7 @@ export class Github extends BaseController {
 
   private logged = (req: Request, res: Response) => {
     if (req.isAuthenticated()) {
-      return res.json({ status: 'logged', code: 200, user: req.user })
+      return res.redirect(`http://localhost:8080/?token=${req.user}`)
     }
 
     res.redirect('/login')
@@ -34,6 +33,6 @@ export class Github extends BaseController {
 
   private logout = (req: Request | any, res: Response) => {
     req.logout()
-    res.redirect('/')
+    res.redirect('http://localhost:8080')
   }
 }

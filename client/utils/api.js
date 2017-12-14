@@ -60,9 +60,14 @@ const github = factory('https://api.github.com/graphql')
 class GitAPI {
   constructor() {
     this.getToken()
-    this.headers = new Headers()
-    this.headers.append('Authorization', localStorage.getItem('token'))
-    this.headers.append('Content-Type', 'application/json')
+  }
+
+  createHeaders = () => {
+    const headers = new Headers()
+    headers.append('Authorization', localStorage.getItem('token'))
+    headers.append('Content-Type', 'application/json')
+
+    return headers
   }
 
   getToken = () => {
@@ -110,7 +115,7 @@ class GitAPI {
       }
     }`
 
-    return github(query, {}, this.headers)
+    return github(query, {}, this.createHeaders())
   }
 
   searchUserOrRepo = (type, value) => {
@@ -149,7 +154,7 @@ class GitAPI {
       }
     }`
 
-    return github(query, {}, this.headers)
+    return github(query, {}, this.createHeaders())
   }
 
   getClickedRepository = (owner, repoName) => {
@@ -224,7 +229,7 @@ class GitAPI {
   }
     `
 
-    return github(query, {}, this.headers)
+    return github(query, {}, this.createHeaders())
   }
 
   getInfoUser = (login) => {
@@ -281,7 +286,7 @@ class GitAPI {
    }
     `
 
-    return github(query, {}, this.headers)
+    return github(query, {}, this.createHeaders())
   }
 
   getMediumPosts = (tag) => {
@@ -309,6 +314,6 @@ class GitAPI {
 
       return medium(query, queryVars)
     }
-  }
+}
 
   export const api = new GitAPI()

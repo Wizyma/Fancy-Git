@@ -6,6 +6,7 @@ import { Repo } from './repo'
 import { MainDiv } from '../styles/globals'
 import { Search } from './search'
 import { User } from './user'
+import { Home } from './home'
 
 export class App extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export class App extends React.Component {
         <MainDiv className="container">
             <Nav />
             <Switch>
+                <Route exact path="/"  component={Home} />
                 <Route exact path="/popular" render={() => (<Popular options={[{ REPOSITORY: 'Repositories' }, { USER: 'Users' }]} url="/"/>)}/>
                 <Route exact path="/repo"  component={Repo} />
                 <Route exact path="/user"  component={User} />

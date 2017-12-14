@@ -53,6 +53,7 @@
     "@types/react-router-dom": "^4.0.8",
     "@types/react-tooltip": "^3.3.2",
     "@types/sequelize": "^4.0.79",
+    "@types/socket.io": "^1.4.31",
     "@types/zen-observable": "^0.5.3",
     "apollo-client": "^2.0.1",
     "apollo-fetch": "^0.6.0",
@@ -86,6 +87,8 @@
     "react-tooltip": "^3.4.0",
     "save-dev": "^2.0.0",
     "sequelize": "^4.22.1",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
     "styled-components": "^2.2.2",
     "tslint-config-airbnb": "^5.3.0",
     "zen-observable": "^0.6.0"
