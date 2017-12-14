@@ -13,6 +13,7 @@ export class Home extends Component {
         if(search && search !== ""){
             const token = search.split('=')[1]
             localStorage.setItem('token', `bearer ${token}`)
+            localStorage.setItem('logged', 'true')
         }
     }
 

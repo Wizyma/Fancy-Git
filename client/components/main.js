@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { Nav } from './nav'
 import { Popular } from './popular'
 import { Repo } from './repo'
@@ -7,6 +7,21 @@ import { MainDiv } from '../styles/globals'
 import { Search } from './search'
 import { User } from './user'
 import { Home } from './home'
+import { Profile } from './profile'
+
+const PrivateRoute = ({ component: Component, path }) => (
+    <Route path={path} render={props => (
+      localStorage.getItem('logged') ? (
+        <Component {...props}/>
+      ) : (
+        <Redirect to={{
+          pathname: '/',
+          state: { from: props.location }
+        }}/>
+      )
+    )}/>
+)
+
 
 export class App extends React.Component {
   render() {
@@ -20,6 +35,7 @@ export class App extends React.Component {
                 <Route exact path="/repo"  component={Repo} />
                 <Route exact path="/user"  component={User} />
                 <Route exact path="/search"  render={() => (<Search options={[{ REPOSITORY: 'Repositories' }, { USER: 'Users' }]} />)}/>
+                <PrivateRoute path="/profile" component={Profile}/>
                 <Route render={() => <p>Not found</p>} />
             </Switch>
         </MainDiv>
