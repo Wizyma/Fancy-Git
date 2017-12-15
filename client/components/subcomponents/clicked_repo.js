@@ -4,13 +4,13 @@ import { Container, ContainerMedium, PostContainer, PostLine, RepoContainer,Repo
 import { PopularDiv, PopularStars, PopularP, PopularElem, PopularContainer, ImgProfil, Img, PopularButton, PopularName } from '../../styles/popular_styles'
 
 
-export const SingleRepo = ({ repo, handleFavourite }) => console.log('repo',repo) || (
+export const SingleRepo = ({ repo, handleFavourite, favText }) => console.log('repo',repo) || (
 
     <Container>
         
         <div style={{ width: '100%' }}>
 
-            <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount} </span> {emoji.emojify(':star:')}<FavButton onClick={handleFavourite}>Add to favourite</FavButton></span>
+            <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount} </span> {emoji.emojify(':star:')}<FavButton onClick={handleFavourite}>{favText}</FavButton></span>
         </div>
         <h4 style={{ textAlign: 'center', marginLeft: '20%' }}>Additional info :</h4>
 

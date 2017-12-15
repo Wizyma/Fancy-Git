@@ -31,10 +31,10 @@ export class FavoritesRoutes extends BaseController {
             return User.models.Favorites.destroy({ where : { UserID: id, RepoName: repo, RepoUser: login } })
                 .then((a: any) => {
                   console.log(a)
-                  res.json({ success: true })
+                  res.json({ success: true, destroy: true })
                 })
           }
-          return res.json({ success: true })
+          return res.json({ success: true, destroy: false })
         })
   }
 }

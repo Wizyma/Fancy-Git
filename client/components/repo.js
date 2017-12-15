@@ -18,73 +18,96 @@ export class Repo extends Component {
         repository: null,
         medium: null,
         error: null
-      } 
+      }
     }
 
-    this.goBack = () =>  props.history.goBack()
-    
+
+    this.goBack = () => props.history.goBack()
+
   }
 
   componentDidMount() {
     const { login, name } = this.state.repo
 
     api.getClickedRepository(login, name)
-    .then(res => {
-      if(res.data.repository !== null){
-      if(res.data.repository.stargazers.totalCount >= 20000 ){
-        return {tofetch: res.data.repository.name, repository: res}
-      
-      }
-    
-      return {tofetch: res.data.repository.primaryLanguage.name, repository: res}
-    }else{
-      return {tofetch: null}
-    }
-    })
-    .then(obj => {
-      if(obj.tofetch !== null){
-      api.getMediumPosts(obj.tofetch.toLowerCase())
-        .then(posts => this.setState({repository: obj.repository.data.repository, error: obj.repository.errors, medium: posts ?posts.data.allPosts: null}))
-      }else{
-        this.setState({repository: null, error: "pas de repo", medium: null})
-      }
+      .then(res => {
+        if (res.data.repository !== null) {
+          if (res.data.repository.stargazers.totalCount >= 20000) {
+            return { tofetch: res.data.repository.name, repository: res }
+
+          }
+
+          return { tofetch: res.data.repository.primaryLanguage.name, repository: res }
+        } else {
+          return { tofetch: null }
+        }
+      })
+      .then(obj => {
+        if (obj.tofetch !== null) {
+          api.getMediumPosts(obj.tofetch.toLowerCase())
+            .then(posts => this.setState({ repository: obj.repository.data.repository, error: obj.repository.errors, medium: posts ? posts.data.allPosts : null }))
+        } else {
+          this.setState({ repository: null, error: "pas de repo", medium: null })
+        }
       })
 
-  {/* api.getMediumPosts('react')
-    .then(datas => console.log(datas)) */} 
+    {/* api.getMediumPosts('react')
+    .then(datas => console.log(datas)) */}
+    const userid = {
+      userid: localStorage.getItem('user')
+
+    }
+
+
+    api.getUserFav(userid).then((res)=>{
+      console.log()
+    })
+
+
+
   }
 
   handleFavourite = () => {
-    const { login, name } = this.state.repo 
+    const { login, name } = this.state.repo
     const user = {
-      userID : localStorage.getItem('user'),
+      userID: localStorage.getItem('user'),
       repo: name,
       login
 
     }
-
+    const destroy = this.state
+    const res = null
     api.manageFavs(user)
-      .then(res => console.log(res))
+      .then((res) => {
+        this.setState({ destroy: res.data.destroy })
+      })
+
+    if (this.state.destroy === true) {
+      this.setState({ favText: 'Add to favourite' })
+    } else {
+      this.setState({ favText: 'Delete From favourite' })
+    }
+
   }
 
-  
+
   render() {
-    const { repository, repo, medium, error, handleFavourite } = this.state
-    return(
+    const { repository, repo, medium, error, handleFavourite, favText } = this.state
+    return (
       <RepoDiv>
-      <BackButton onClick={this.goBack}>Back</BackButton>
-          <div style={{ width: '100%' }}>
-              {error === "pas de repo" ? <h1>Error : Repo not found</h1> :
-              <div>
-               {repository && <SingleRepo handleFavourite={this.handleFavourite} repo={repository} medium={medium} />}
-               {medium &&<RepoPosts medium={medium} />}
-               <Loading speed={500} text='Loading' />
-               </div>
-               
-               }
-          
-          </div>
+        <BackButton onClick={this.goBack}>Back</BackButton>
+        <div style={{ width: '100%' }}>
+          {error === "pas de repo" ? <h1>Error : Repo not found</h1> :
+            <div>
+              {repository && <SingleRepo favText={favText} handleFavourite={this.handleFavourite} repo={repository} medium={medium} />}
+              {medium && <RepoPosts medium={medium} />}
+              <Loading speed={500} text='Loading' />
+            </div>
+
+          }
+
+        </div>
       </RepoDiv>
-    )  
+    )
   }
 }
