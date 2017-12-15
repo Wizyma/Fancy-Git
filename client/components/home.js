@@ -30,8 +30,7 @@ export class Home extends Component {
         return(
             <GlobalDiv>
                 <ContainerFull>
-                    <a href='http://localhost:1339/login'>Login</a>
-                    {this.props.children}
+                    <h1 className='text-center'>Fancy Git</h1>
                 </ContainerFull>
             </GlobalDiv>
         )

@@ -7,6 +7,7 @@ import * as passport from 'passport'
 import { Main } from './routes/main'
 import { db } from './models/index'
 import { Github } from './routes/github'
+import { FavoritesRoutes } from './routes/database'
 // import * as cookieParser from 'cookie-parser' use later
 const models = require('./models')
 const Sequelize = require('sequelize')
@@ -104,8 +105,14 @@ export class Server {
     // github routes
     const git = new Github()
     const gitRoutes = Github.connect(router, git)
+
+    // Favorites
+    const favs = new FavoritesRoutes()
+    const favRoutes = FavoritesRoutes.connect(router, favs)
+
     this.app.use(mainRoutes)
     this.app.use(gitRoutes)
+    this.app.use(favRoutes)
   }
 
   /**

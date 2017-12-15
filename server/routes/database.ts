@@ -2,7 +2,7 @@ import { BaseController, Route, Config } from './base'
 import { Router, Request, Response, NextFunction } from 'express'
 import { db as User } from '../models/index'
 
-export class Main extends BaseController {
+export class FavoritesRoutes extends BaseController {
 
   constructor() {
     super()
