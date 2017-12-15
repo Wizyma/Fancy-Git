@@ -11,7 +11,7 @@ import { Profile } from './profile'
 
 const PrivateRoute = ({ component: Component, path }) => (
     <Route path={path} render={props => (
-      localStorage.getItem('logged') ? (
+      localStorage.getItem('logged') === 'true' ? (
         <Component {...props}/>
       ) : (
         <Redirect to={{

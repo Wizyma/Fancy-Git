@@ -43,6 +43,13 @@ export const Nav = styled(NavLink) `
     }
 `
 
+export const Alog = styled.a `
+    color: black;
+    font-weight: 700;
+    text-decoration: none;
+
+`
+
 export const BackButton = styled.button `
 width: 90px;
 z-index: 9999;

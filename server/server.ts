@@ -53,7 +53,7 @@ export class Server {
     this.app.use('*', cors())
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded())
-    this.app.use(session({ secret: 'cats', resave: true, saveUninitialized: true }))
+    this.app.use(session({ secret: 'cats', resave: false, saveUninitialized: true, unset: 'destroy' }))
     this.app.use(passport.initialize())
     this.app.use(passport.session())
     this.app.use(flash())
