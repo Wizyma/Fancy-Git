@@ -1,4 +1,5 @@
 require('isomorphic-fetch') // injects globals: fetch, Headers, Request, Response
+import axios from 'axios'
 
 var assert = require('assert')
 var defaults = require('101/defaults')
@@ -316,19 +317,19 @@ class GitAPI {
     }
 
     getUserFav = ({ userid }) => {
-      return fetch('http://localhost:1339/getuser', {
-        body: {
+      return axios.get('http://localhost:1339/getuser', {
+        params: {
           id: userid
         }
       })
     }
 
-    manageFavs = ({ userid, repo, login }) => {
-      return fetch('http://localhost:1339/managefav', {
-        body: {
-          id: userid,
+    manageFavs = ({ userID, repo, login }) => {
+      return axios.post('http://localhost:1339/managefav', {
+        params: {
+          id: userID,
           repo,
-          login
+          login,
         }
       })
     }

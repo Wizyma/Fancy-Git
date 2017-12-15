@@ -30,7 +30,6 @@ export class Repo extends Component {
 
     api.getClickedRepository(login, name)
     .then(res => {
-      console.log('res.data', res.data)
       if(res.data.repository !== null){
       if(res.data.repository.stargazers.totalCount >= 20000 ){
         return {tofetch: res.data.repository.name, repository: res}
@@ -43,7 +42,6 @@ export class Repo extends Component {
     }
     })
     .then(obj => {
-      console.log('obj',obj)
       if(obj.tofetch !== null){
       api.getMediumPosts(obj.tofetch.toLowerCase())
         .then(posts => this.setState({repository: obj.repository.data.repository, error: obj.repository.errors, medium: posts ?posts.data.allPosts: null}))
@@ -66,15 +64,12 @@ export class Repo extends Component {
     }
 
     api.manageFavs(user)
-      .then(res => console.log(res) || res.json())
-      .then(data => console.log(data))
+      .then(res => console.log(res))
   }
 
   
   render() {
-    console.log(this.state)
     const { repository, repo, medium, error, handleFavourite } = this.state
-  console.log('error', error)
     return(
       <RepoDiv>
       <BackButton onClick={this.goBack}>Back</BackButton>
