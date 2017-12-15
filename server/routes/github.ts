@@ -32,7 +32,8 @@ export class Github extends BaseController {
   }
 
   private logout = (req: Request | any, res: Response) => {
-    req.logout()
-    res.redirect('http://localhost:8080/')
+    req.session.destroy((err: any) => {
+      res.redirect('http://localhost:8080/?delogged=true')
+    })
   }
 }
