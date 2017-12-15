@@ -53,17 +53,25 @@ export class Repo extends Component {
 
     {/* api.getMediumPosts('react')
     .then(datas => console.log(datas)) */}
-    const userid = {
-      userid: localStorage.getItem('user')
-
-    }
+    const id = localStorage.getItem('user')
 
 
-    api.getUserFav(userid).then((res)=>{
-      console.log()
+    api.getUserFav(id).then((res)=>{
+      console.log(res)
+      res.data.map((row)=>{
+        if(row.name === name){
+          this.setState({destroy: false})
+        }else{
+          this.setState({destroy: true})
+        }
+      })
     })
 
-
+    if (this.state.destroy === true) {
+      this.setState({ favText: 'Add to favourite' })
+    } else {
+      this.setState({ favText: 'Delete From favourite' })
+    }
 
   }
 
