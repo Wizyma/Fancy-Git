@@ -2,7 +2,6 @@ import { NextFunction } from 'express-serve-static-core'
 import * as passport from 'passport'
 import * as path from 'path'
 import { Config } from '../routes/base'
-import { db as User } from '../models/index'
 const GitHubStrategy = require('passport-github2').Strategy
 
 const config_path: string = path.join(process.cwd(), 'config.json')
@@ -11,15 +10,11 @@ const config: Config = require(config_path)
 passport.use(new GitHubStrategy({
   clientID: config.gitClientId,
   clientSecret: config.gitSecret,
-  callbackURL: 'https://2f18534e.ngrok.io/logged',
+  callbackURL: 'https://a665e4f6.ngrok.io/logged',
   passReqToCallback : true,
 },
 (req: any, accessToken: string, refreshToken: string, profile: any, done: Function) => {
-  console.log(accessToken, refreshToken)
-  return User.models.Favorites.findOrCreate({ where: { UserID: profile.id }, defaults: { UserID: profile.id } })
-  .spread((user: any, created: boolean) => {
-    return done(null, accessToken)
-  })
+  return done(null, { accessToken, userid: profile.id })
 }))
 
 // Passport session setup.

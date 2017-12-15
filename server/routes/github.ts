@@ -25,7 +25,7 @@ export class Github extends BaseController {
 
   private logged = (req: Request, res: Response) => {
     if (req.isAuthenticated()) {
-      return res.redirect(`http://localhost:8080/?token=${req.user}`)
+      return res.redirect(`http://localhost:8080/?token=${req.user.accessToken}&user=${req.user.userid}`)
     }
 
     res.redirect('/login')
@@ -33,6 +33,6 @@ export class Github extends BaseController {
 
   private logout = (req: Request | any, res: Response) => {
     req.logout()
-    res.redirect('http://localhost:8080')
+    res.redirect('http://localhost:8080/')
   }
 }

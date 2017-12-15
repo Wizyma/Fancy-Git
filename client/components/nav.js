@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Ul, Li, Nav as NavLink } from '../styles/globals'
 
-export const Nav = () => (
+export const Nav = (props) => console.log(props) || (
     <Ul className="nav">
         <Li>
             <NavLink exact activeClassName="active" to="/">Home</NavLink>
