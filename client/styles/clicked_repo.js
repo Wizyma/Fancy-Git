@@ -49,3 +49,16 @@ padding-right: 50px;
 marginRight: 20px
 }
 `
+
+export const FavButton = styled.a`
+border: 1px solid transparent;
+border-radius: 25px;
+background: rgb(63, 81, 181);
+padding: 9px;
+color: white;
+float: right;
+list-style: none;
+position: relative;
+cursor: pointer;
+top: -8px;
+`

@@ -7,8 +7,9 @@ export class Profile extends Component {
 
 
     render(){
+        
         return(
-            <h1>LoGGEEEDDdEDED</h1>
+            <h1>Logged as </h1>
         )
     }
 }

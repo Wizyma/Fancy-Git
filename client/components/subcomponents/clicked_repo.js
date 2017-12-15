@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 const emoji = require('node-emoji')
-import { Container, ContainerMedium, PostContainer, PostLine, RepoContainer,RepoInfos } from '../../styles/clicked_repo'
+import { Container, ContainerMedium, PostContainer, PostLine, RepoContainer,RepoInfos, FavButton } from '../../styles/clicked_repo'
 import { PopularDiv, PopularStars, PopularP, PopularElem, PopularContainer, ImgProfil, Img, PopularButton, PopularName } from '../../styles/popular_styles'
 
 
-export const SingleRepo = ({ repo }) => console.log(repo) || (
+export const SingleRepo = ({ repo }) => console.log('repo',repo) || (
+
     <Container>
+        
         <div style={{ width: '100%' }}>
-            <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount}</span> {emoji.emojify(':star:')}</span>
+
+            <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount} </span> {emoji.emojify(':star:')}<FavButton>Add to favourite</FavButton></span>
         </div>
         <h4 style={{ textAlign: 'center', marginLeft: '20%' }}>Additional info :</h4>
 

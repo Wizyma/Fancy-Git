@@ -9,9 +9,9 @@ const config_path: string = path.join(process.cwd(), 'config.json')
 const config: Config = require(config_path)
 
 passport.use(new GitHubStrategy({
-  clientID: config.gitClientId,
+  clientID: config.gitClientId, 
   clientSecret: config.gitSecret,
-  callbackURL: 'https://2f18534e.ngrok.io/logged',
+  callbackURL: 'http://2c85de58.ngrok.io/logged',
   passReqToCallback : true,
 },
 (req: any, accessToken: string, refreshToken: string, profile: any, done: Function) => {
