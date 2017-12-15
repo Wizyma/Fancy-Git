@@ -314,6 +314,24 @@ class GitAPI {
 
       return medium(query, queryVars)
     }
+
+    getUserFav = ({ userid }) => {
+      return fetch('http://localhost:1339/', {
+        body: {
+          id: userid
+        }
+      })
+    }
+
+    manageFavs = ({ userid, repo, login }) => {
+      return fetch('http://localhost:1339/', {
+        body: {
+          id: userid,
+          repo,
+          login
+        }
+      })
+    }
 }
 
   export const api = new GitAPI()

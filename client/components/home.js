@@ -11,8 +11,10 @@ export class Home extends Component {
         console.log(this.props)
         const { search } = this.props.location
         if(search && search !== ""){
-            const token = search.split('=')[1]
+            const params = search.split('=')
+            const token = search.split('=')[1].split('&')[0]
             localStorage.setItem('token', `bearer ${token}`)
+            localStorage.setItem('user', params[2])
             localStorage.setItem('logged', 'true')
             
 
