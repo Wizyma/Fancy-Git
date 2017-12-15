@@ -26,9 +26,12 @@ const PrivateRoute = ({ component: Component, path }) => (
 export class App extends React.Component {
   render() {
     return(
+      
     <Router>
         <MainDiv className="container">
+        
             <Nav />
+           
             <Switch>
                 <Route exact path="/"  component={Home} />
                 <Route exact path="/popular" render={() => (<Popular options={[{ REPOSITORY: 'Repositories' }, { USER: 'Users' }]} url="/"/>)}/>

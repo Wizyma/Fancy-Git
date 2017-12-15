@@ -10,7 +10,7 @@ const config: Config = require(config_path)
 passport.use(new GitHubStrategy({
   clientID: config.gitClientId, 
   clientSecret: config.gitSecret,
-  callbackURL: 'http://2c85de58.ngrok.io/logged',
+  callbackURL: 'http://f15e8888.ngrok.io/logged',
   passReqToCallback : true,
 },
 (req: any, accessToken: string, refreshToken: string, profile: any, done: Function) => {

@@ -56,11 +56,24 @@ export class Repo extends Component {
     .then(datas => console.log(datas)) */} 
   }
 
+  handleFavourite = () => {
+    const { login, name } = this.state.repo 
+    const user = {
+      userID : localStorage.getItem('user'),
+      repo: name,
+      login
+
+    }
+
+    api.manageFavs(user)
+      .then(res => console.log(res) || res.json())
+      .then(data => console.log(data))
+  }
 
   
   render() {
     console.log(this.state)
-    const { repository, repo, medium, error } = this.state
+    const { repository, repo, medium, error, handleFavourite } = this.state
   console.log('error', error)
     return(
       <RepoDiv>
@@ -68,7 +81,7 @@ export class Repo extends Component {
           <div style={{ width: '100%' }}>
               {error === "pas de repo" ? <h1>Error : Repo not found</h1> :
               <div>
-               {repository && <SingleRepo repo={repository} medium={medium} />}
+               {repository && <SingleRepo handleFavourite={this.handleFavourite} repo={repository} medium={medium} />}
                {medium &&<RepoPosts medium={medium} />}
                <Loading speed={500} text='Loading' />
                </div>
