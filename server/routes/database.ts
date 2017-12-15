@@ -22,10 +22,10 @@ export class FavoritesRoutes extends BaseController {
 
   private managefavorite = (req: Request, res: Response) => {
     const { id, login, repo } = req.body
-    User.models.Favorites.findOrCreate({ where : { UserID: id, RepoName: repo, UserName: login }, defaults: { UserID: id, RepoName: repo, UserName: login } })
+    User.models.Favorites.findOrCreate({ where : { UserID: id, RepoName: repo, RepoUser: login }, defaults: { UserID: id, RepoName: repo, RepoUser: login } })
         .spread((results: any, created: boolean) => {
           if (!created) {
-            User.models.Favorites.destroy({ where : { UserID: id, RepoName: repo, UserName: login } })
+            User.models.Favorites.destroy({ where : { UserID: id, RepoName: repo, RepoUser: login } })
                 .then((a: any) => {
                   console.log(a)
                   res.json({ success: true })
