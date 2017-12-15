@@ -316,7 +316,7 @@ class GitAPI {
     }
 
     getUserFav = ({ userid }) => {
-      return fetch('http://localhost:1339/', {
+      return fetch('http://localhost:1339/getuser', {
         body: {
           id: userid
         }
@@ -324,7 +324,7 @@ class GitAPI {
     }
 
     manageFavs = ({ userid, repo, login }) => {
-      return fetch('http://localhost:1339/', {
+      return fetch('http://localhost:1339/managefav', {
         body: {
           id: userid,
           repo,
