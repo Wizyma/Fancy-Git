@@ -10,21 +10,25 @@ export class FavoritesRoutes extends BaseController {
   }
 
   static routes: Route[] = [
-    { verb: 'get', path: '/getuser', action: 'getuser' },
+    { verb: 'get', path: '/getuser', action: 'getUserPosts' },
     { verb: 'post', path: '/managefav', action: 'managefavorite' },
   ]
   
-  private getuser = (req: Request, res: Response) => {
-    const { id } = req.body.params
+  private getUserPosts = (req: Request | any, res: Response) => {
+    console.log(req.query)
+    const { id } = req.query
     User.models.Favorites.findAll({ where : { UserID: id } })
         .then((result: any) => {
-          res.json(result)
+          console.log(result)
+          if (result.length >= 1) {
+            return res.json(result.dataValues)
+          }
+          return res.send('No values Found')
         }) 
   }
 
   private managefavorite = (req: Request, res: Response) => {
     const { id, login, repo } = req.body.params
-    console.log(req.isAuthenticated())
     User.models.Favorites.findOrCreate({ where : { UserID: id, RepoName: repo, RepoUser: login }, defaults: { UserID: id, RepoName: repo, RepoUser: login } })
         .spread((results: any, created: boolean) => {
           if (!created) {

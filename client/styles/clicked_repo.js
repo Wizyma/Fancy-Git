@@ -36,17 +36,18 @@ width: 100%
 
 
 export const RepoContainer = styled.ul`
-display: inline-flex;
-listStyle: none;
-width: 100%
+    display: inline-flex;
+    list-style: none;
+    width: 100%
 }
 `
 
 
 export const RepoInfos = styled.li`
-border-right: 1px solid lightgray;
-padding-right: 50px;
-marginRight: 20px
+    border-right: 1px solid lightgray;
+    padding-right: 50px;
+    margin-right: 20px;
+    max-width: 600px;
 }
 `
 

@@ -10,7 +10,9 @@ export const SingleRepo = ({ repo, handleFavourite, favText }) => console.log('r
         
         <div style={{ width: '100%' }}>
 
-            <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount} </span> {emoji.emojify(':star:')}<FavButton onClick={handleFavourite}>{favText}</FavButton></span>
+            <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount} </span> {emoji.emojify(':star:')}
+                {localStorage.getItem('logged') === 'true' && <FavButton onClick={handleFavourite}>{favText}</FavButton>}
+            </span>
         </div>
         <h4 style={{ textAlign: 'center', marginLeft: '20%' }}>Additional info :</h4>
 

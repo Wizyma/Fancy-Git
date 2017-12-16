@@ -34,13 +34,11 @@ export class Repo extends Component {
         if (res.data.repository !== null) {
           if (res.data.repository.stargazers.totalCount >= 20000) {
             return { tofetch: res.data.repository.name, repository: res }
-
           }
 
           return { tofetch: res.data.repository.primaryLanguage.name, repository: res }
-        } else {
-          return { tofetch: null }
-        }
+        } 
+        return { tofetch: null }
       })
       .then(obj => {
         if (obj.tofetch !== null) {
@@ -54,23 +52,24 @@ export class Repo extends Component {
     {/* api.getMediumPosts('react')
     .then(datas => console.log(datas)) */}
     const id = localStorage.getItem('user')
+    const isLogged = localStorage.getItem('logged')
 
-
-    api.getUserFav(id).then((res)=>{
-      console.log(res)
-      res.data.map((row)=>{
-        if(row.name === name){
-          this.setState({destroy: false})
-        }else{
-          this.setState({destroy: true})
-        }
+    if(isLogged === 'true'){
+      api.getUserFav({userid: id})
+        .then(res => {
+          res.data.map(row => {
+            if(row.name === name){
+              return this.setState({destroy: false})
+            }
+            return this.setState({destroy: true}) 
+          })
       })
-    })
-
-    if (this.state.destroy === true) {
-      this.setState({ favText: 'Add to favourite' })
-    } else {
-      this.setState({ favText: 'Delete From favourite' })
+  
+      if (this.state.destroy === true) {
+        this.setState({ favText: 'Add to favourite' })
+      } else {
+        this.setState({ favText: 'Delete From favourite' })
+      }
     }
 
   }
@@ -83,10 +82,10 @@ export class Repo extends Component {
       login
 
     }
-    const destroy = this.state
-    const res = null
+    const { destroy } = this.state
     api.manageFavs(user)
-      .then((res) => {
+      .then(res => {
+        console.log(res)
         this.setState({ destroy: res.data.destroy })
       })
 
@@ -100,7 +99,7 @@ export class Repo extends Component {
 
 
   render() {
-    const { repository, repo, medium, error, handleFavourite, favText } = this.state
+    const { repository, repo, medium, error, favText } = this.state
     return (
       <RepoDiv>
         <BackButton onClick={this.goBack}>Back</BackButton>
