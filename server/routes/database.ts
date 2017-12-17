@@ -21,7 +21,7 @@ export class FavoritesRoutes extends BaseController {
         .then((result: any) => {
           console.log(result)
           if (result.length >= 1) {
-            return res.json(result.dataValues)
+            return res.json(result)
           }
           return res.send('No values Found')
         }) 

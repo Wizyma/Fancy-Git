@@ -17,7 +17,8 @@ export class Repo extends Component {
         repo: props.location.state,
         repository: null,
         medium: null,
-        error: null
+        error: null,
+
       }
     }
 
@@ -27,7 +28,7 @@ export class Repo extends Component {
   }
 
   componentDidMount() {
-    const { login, name } = this.state.repo
+    const { login, name, destroy } = this.state.repo
 
     api.getClickedRepository(login, name)
       .then(res => {
@@ -37,7 +38,7 @@ export class Repo extends Component {
           }
 
           return { tofetch: res.data.repository.primaryLanguage.name, repository: res }
-        } 
+        }
         return { tofetch: null }
       })
       .then(obj => {
@@ -54,23 +55,28 @@ export class Repo extends Component {
     const id = localStorage.getItem('user')
     const isLogged = localStorage.getItem('logged')
 
-    if(isLogged === 'true'){
-      api.getUserFav({userid: id})
-        .then(res => {
-          res.data.map(row => {
-            if(row.name === name){
-              return this.setState({destroy: false})
-            }
-            return this.setState({destroy: true}) 
-          })
-      })
-  
-      if (this.state.destroy === true) {
-        this.setState({ favText: 'Add to favourite' })
-      } else {
-        this.setState({ favText: 'Delete From favourite' })
-      }
+
+    if (isLogged) {
+      api.getUserFav({ userid: id }).then((res => {
+        console.log(res.data)
+        if (res.data === "No values Found") {
+          this.setState({
+            destroy: true
+          }, () => {
+            this.setState({ favText: 'Add to favourite' })
+          });
+        }else{
+          this.setState({
+            destroy: false
+          }, () => {
+            this.setState({ favText: 'Delete From favourite' })
+          });
+        }
+      }))
     }
+
+  
+
 
   }
 
@@ -82,18 +88,27 @@ export class Repo extends Component {
       login
 
     }
-    const { destroy } = this.state
+
     api.manageFavs(user)
       .then(res => {
-        console.log(res)
+        console.log('dernierrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',res)
+        if(res.data.destroy === true){
+          this.setState({
+            destroy: true
+          }, () => {
+            this.setState({ favText: 'Add to favourite' })
+          });
+        }else{
+          this.setState({
+            destroy: false
+          }, () => {
+            this.setState({ favText: 'Delete From favourite' })
+          });
+        }
         this.setState({ destroy: res.data.destroy })
       })
 
-    if (this.state.destroy === true) {
-      this.setState({ favText: 'Add to favourite' })
-    } else {
-      this.setState({ favText: 'Delete From favourite' })
-    }
+  
 
   }
 
