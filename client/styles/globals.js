@@ -47,6 +47,7 @@ export const Alog = styled.a `
     color: black;
     font-weight: 700;
     text-decoration: none;
+    cursor: pointer;
 
 `
 

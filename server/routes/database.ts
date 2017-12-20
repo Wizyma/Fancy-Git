@@ -15,7 +15,7 @@ export class FavoritesRoutes extends BaseController {
   ]
   
   private getUserPosts = (req: Request | any, res: Response) => {
-    console.log(req.query)
+    console.log(req.isAuthenticated())
     const { id } = req.query
     User.models.Favorites.findAll({ where : { UserID: id } })
         .then((result: any) => {
@@ -28,6 +28,7 @@ export class FavoritesRoutes extends BaseController {
   }
 
   private managefavorite = (req: Request, res: Response) => {
+    console.log(req.isAuthenticated())
     const { id, login, repo } = req.body.params
     User.models.Favorites.findOrCreate({ where : { UserID: id, RepoName: repo, RepoUser: login }, defaults: { UserID: id, RepoName: repo, RepoUser: login } })
         .spread((results: any, created: boolean) => {

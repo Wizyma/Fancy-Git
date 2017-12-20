@@ -59,19 +59,23 @@ export class Repo extends Component {
     if (isLogged) {
       api.getUserFav({ userid: id }).then((res => {
         console.log(res.data)
-        if (res.data === "No values Found") {
-          this.setState({
-            destroy: true
-          }, () => {
-            this.setState({ favText: 'Add to favourite' })
-          });
-        }else{
-          this.setState({
-            destroy: false
-          }, () => {
-            this.setState({ favText: 'Delete From favourite' })
+        if (res.data.status === 400) {
+          return this.setState({
+            destroy: true,
+            favText: 'Add to favourite'
           });
         }
+        
+        if(res.data.find((e, i) => e.RepoName === this.state.repo.name)){
+          return this.setState({
+            destroy: false,
+            favText: 'Delete From favourite'
+          });
+        }
+        return this.setState({
+          destroy: true,
+          favText: 'Add to favourite'
+        });
       }))
     }
 

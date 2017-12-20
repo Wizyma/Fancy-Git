@@ -233,6 +233,31 @@ class GitAPI {
     return github(query, {}, this.createHeaders())
   }
 
+  getProfileRepos = (owner, repoName) => {
+    const query = `
+    {
+    repository(owner: "${owner}", name: "${repoName}"){
+      name,
+      owner {
+        avatarUrl,
+        login
+      },
+      stargazers {
+        totalCount
+      },
+      description,
+      languages(first: 1, orderBy: {field: SIZE, direction: DESC}) {
+          nodes {
+            name
+          }
+        }
+      }
+    }
+    `
+
+    return github(query, {}, this.createHeaders())
+  }
+
   getInfoUser = (login) => {
     const query = `{
       user(login: "${login}"){

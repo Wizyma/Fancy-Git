@@ -15,6 +15,15 @@ export class Nav extends Component {
         this.setState({isLogged: localStorage.getItem('logged')})
     }
 
+    handleLogin = (e) => {
+        const { isLogged } = this.state
+        if(isLogged === 'true'){
+            return window.location = 'http://localhost:1339/logout'
+        }
+
+        return window.location = 'http://localhost:1339/login'
+    }
+
     render(){
         const { isLogged } = this.state
         console.log(isLogged)
@@ -33,7 +42,7 @@ export class Nav extends Component {
                 <NavLink activeClassName="active" to="/profile">Profile</NavLink>
             </Li>
             <Li>
-                {isLogged === 'true' ? <Alog href='http://localhost:1339/logout'>Sign Out</Alog> : <Alog href='http://localhost:1339/login'>Login</Alog>}
+                <Alog onClick={ this.handleLogin }>{isLogged === 'true' ? 'Sign Out': 'Login'}</Alog>
             </Li>
         </Ul>
         )
