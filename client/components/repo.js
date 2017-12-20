@@ -118,7 +118,7 @@ export class Repo extends Component {
 
 
   render() {
-    const { repository, repo, medium, error, favText } = this.state
+    const { repository, repo, medium, error, favText, destroy } = this.state
     return (
       <RepoDiv>
         <BackButton onClick={this.goBack}>Back</BackButton>
