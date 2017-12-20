@@ -55,9 +55,16 @@ export const RepoPosts = ({ medium }) =>  (
             <PostContainer>
 
                 {
-                    medium.map((elem, i) => (
+                    medium.map((elem, i) => console.log(elem) || (
+                        
                         <PostLine key={i}>
-                            <div style={{ margin: '0px -21px' }}><img style={{ height: '10%', width: '100%', position: 'relative', top: '-20px' }} src={'https://cdn-images-1.medium.com/fit/t/1600/480/' + elem.virtuals.previewImage.imageId} /> </div>
+                        
+                            <div style={{ margin: '0px -21px' }}>
+                            {elem.virtuals.previewImage.imageId !== "" ? 
+                            <img style={{ height: '10%', width: '100%', position: 'relative', top: '-20px' }} src={'https://cdn-images-1.medium.com/fit/t/1600/480/' + elem.virtuals.previewImage.imageId} /> :
+                            <img style={{ height: '10%', width: '100%', position: 'relative', top: '-20px' }} src={'client/styles/medium.png'} />
+                            }
+                             </div>
 
                             <div >
                                 <h4 style={{ borderBottom: '2px solid lightgrey' }}> {elem.title} </h4>
