@@ -58,7 +58,7 @@ export class Repo extends Component {
 
     if (isLogged) {
       api.getUserFav({ userid: id }).then((res => {
-        console.log(res.data)
+  
         if (res.data.status === 400) {
           return this.setState({
             destroy: true,
@@ -66,8 +66,10 @@ export class Repo extends Component {
           });
         }
         
-        if(res.data.find((e, i) => e.RepoName === this.state.repo.name)){
+        if(res.data.find((e, i) => e.RepoName === this.state.repo.name && e.RepoUser === this.state.repo.login)){
+          console.log('wtf frereeeeeeeeeeeeeeeeeeeeee', this.state)
           return this.setState({
+
             destroy: false,
             favText: 'Delete From favourite'
           });
@@ -95,7 +97,7 @@ export class Repo extends Component {
 
     api.manageFavs(user)
       .then(res => {
-        console.log('dernierrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',res)
+      
         if(res.data.destroy === true){
           this.setState({
             destroy: true

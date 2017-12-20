@@ -4,7 +4,7 @@ import { Container, ContainerMedium, PostContainer, PostLine, RepoContainer,Repo
 import { PopularDiv, PopularStars, PopularP, PopularElem, PopularContainer, ImgProfil, Img, PopularButton, PopularName } from '../../styles/popular_styles'
 
 
-export const SingleRepo = ({ repo, handleFavourite, favText }) => console.log('repo',repo) || (
+export const SingleRepo = ({ repo, handleFavourite, favText }) => (
 
     <Container>
         
@@ -46,7 +46,7 @@ export const SingleRepo = ({ repo, handleFavourite, favText }) => console.log('r
     </Container>
 )
 
-export const RepoPosts = ({ medium }) => console.log(medium) || (
+export const RepoPosts = ({ medium }) =>  (
 
     <ContainerMedium>
         <div style={{ overflowY: 'scroll', height: '500px' }}>
