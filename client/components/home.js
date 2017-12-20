@@ -9,6 +9,7 @@ export class Home extends Component {
 
     componentWillMount(){
         const { search } = this.props.location
+        console.log(search)
         if(search && search !== ""){
             if(search.split('=')[0].split('?')[1] === 'delogged'){
                 localStorage.setItem('logged', 'false')

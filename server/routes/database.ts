@@ -23,7 +23,7 @@ export class FavoritesRoutes extends BaseController {
           if (result.length >= 1) {
             return res.json(result.dataValues)
           }
-          return res.send('No values Found')
+          return res.json({ status: 400, text: 'No values Found' })
         }) 
   }
 
@@ -34,7 +34,7 @@ export class FavoritesRoutes extends BaseController {
           if (!created) {
             return User.models.Favorites.destroy({ where : { UserID: id, RepoName: repo, RepoUser: login } })
                 .then((a: any) => {
-                  console.log(a)
+                  console.log('User deleted')
                   res.json({ success: true, destroy: true })
                 })
           }
