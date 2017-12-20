@@ -5,9 +5,7 @@ import { PopularDiv, PopularStars, PopularP, PopularElem, PopularContainer, ImgP
 
 
 export const SingleRepo = ({ repo, handleFavourite, favText }) => (
-
     <Container>
-        
         <div style={{ width: '100%' }}>
 
             <span style={{ float: 'right' }} data-tip="Stars"><span style={{ color: '#3f51b5' }}>{repo.stargazers.totalCount} </span> {emoji.emojify(':star:')}
@@ -38,45 +36,32 @@ export const SingleRepo = ({ repo, handleFavourite, favText }) => (
             </RepoInfos>
             <li>
                 <h3>Issues Number : {Object.keys(repo.issues.nodes).length}</h3>
-
                 <p>Licence : {repo.licenseInfo === null ? 'none' : repo.licenseInfo.name}</p>
             </li>
-
         </RepoContainer>
     </Container>
 )
 
 export const RepoPosts = ({ medium }) =>  (
-
     <ContainerMedium>
         <div style={{ overflowY: 'scroll', height: '500px' }}>
             <h3> Posts </h3>
-
             <PostContainer>
-
-                {
-                    medium.map((elem, i) => console.log(elem) || (
-                        
-                        <PostLine key={i}>
-                        
-                            <div style={{ margin: '0px -21px' }}>
-                            {elem.virtuals.previewImage.imageId !== "" ? 
-                            <img style={{ height: '10%', width: '100%', position: 'relative', top: '-20px' }} src={'https://cdn-images-1.medium.com/fit/t/1600/480/' + elem.virtuals.previewImage.imageId} /> :
-                            <img style={{ height: '10%', width: '100%', position: 'relative', top: '-20px' }} src={'client/styles/medium.png'} />
-                            }
-                             </div>
-
-                            <div >
-                                <h4 style={{ borderBottom: '2px solid lightgrey' }}> {elem.title} </h4>
-                                <a style={{ textDecoration: 'none', color: 'cadetblue' }} target='__blank' href={elem.url} >{elem.content.subtitle}</a>
+                {medium.map((elem, i) => (
+                    <PostLine key={i}>
+                        <div style={{ margin: '0px -21px' }}>
+                        {elem.virtuals.previewImage.imageId !== "" ? 
+                        <img style={{ height: '10%', width: '100%', position: 'relative', top: '-20px' }} src={'https://cdn-images-1.medium.com/fit/t/1600/480/' + elem.virtuals.previewImage.imageId} /> :
+                        <img style={{ height: '10%', width: '100%', position: 'relative', top: '-20px' }} src={'client/styles/medium.png'} />
+                        }
                             </div>
-
-                        </PostLine>
-                    ))}
-
+                        <div >
+                            <h4 style={{ borderBottom: '2px solid lightgrey' }}> {elem.title} </h4>
+                            <a style={{ textDecoration: 'none', color: 'cadetblue' }} target='__blank' href={elem.url} >{elem.content.subtitle}</a>
+                        </div>
+                    </PostLine>
+                ))}
             </PostContainer>
-
         </div>
-
     </ContainerMedium>
 )

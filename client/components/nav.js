@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Ul, Alog, Li, Nav as NavLink } from '../styles/globals'
+import { api } from '../utils/api'
 
 export class Nav extends Component {
     constructor(props){
@@ -18,7 +19,11 @@ export class Nav extends Component {
     handleLogin = (e) => {
         const { isLogged } = this.state
         if(isLogged === 'true'){
-            return window.location = 'http://localhost:1339/logout'
+            localStorage.removeItem('token')
+            api.getToken()
+                .then(() => {
+                    return window.location = 'http://localhost:1339/logout'
+                })
         }
 
         return window.location = 'http://localhost:1339/login'

@@ -45,18 +45,18 @@ export class Repo extends Component {
         if (obj.tofetch !== null) {
           api.getMediumPosts(obj.tofetch.toLowerCase())
             .then(posts => this.setState({ repository: obj.repository.data.repository, error: obj.repository.errors, medium: posts ? posts.data.allPosts : null }))
+            .catch(err => console.log(err))
         } else {
           this.setState({ repository: null, error: "pas de repo", medium: null })
         }
       })
+      .catch(err => console.log(err))
 
     {/* api.getMediumPosts('react')
     .then(datas => console.log(datas)) */}
     const id = localStorage.getItem('user')
     const isLogged = localStorage.getItem('logged')
-
-
-    if (isLogged) {
+    if (isLogged === 'true') {
       api.getUserFav({ userid: id }).then((res => {
   
         if (res.data.status === 400) {
@@ -79,10 +79,6 @@ export class Repo extends Component {
         });
       }))
     }
-
-  
-
-
   }
 
   handleFavourite = () => {

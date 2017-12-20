@@ -24,7 +24,6 @@ export class Profile extends Component {
                         requests = favs.map((elem) => {
                             return api.getProfileRepos(elem.RepoUser, elem.RepoName)
                         })
-
                         Promise.all(requests)
                             .then(res => {
                                 this.setState({ favorites: res })
