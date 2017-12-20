@@ -5,16 +5,13 @@ import * as logger from 'morgan'
 import * as cors from 'cors'
 import * as passport from 'passport'
 import { Main } from './routes/main'
-import { db } from './models/index'
 import { Github } from './routes/github'
 import { FavoritesRoutes } from './routes/database'
 // import * as cookieParser from 'cookie-parser' use later
-const models = require('./models')
-const Sequelize = require('sequelize')
 const mediumServer = require('medium-graphql').default
 const session = require('express-session')
 const flash = require('connect-flash')
-
+import { dbConnect } from './models/index'
 
 interface ServerOptions {
   readonly port?: number
@@ -60,25 +57,7 @@ export class Server {
     this.app.use(flash())
     this.router()
 
-    db
-      .authenticate()
-      .then(() => {
-        console.log('Connection has been established successfully.')
-      })
-      .catch((err : any) => {
-        console.error('Unable to connect to the database:', err)
-      })
-
-    db.import('./models/favorites')
-
-    db
-      .sync({ force: true })
-      .then(() => {
-        console.log('Tables created !')
-      })
-      .catch((err: any) => {
-        console.error('Error when create tables : ', err)
-      })
+    dbConnect()
 
     this.app.use('/graphql', mediumServer)
     this.app.use(this.notFoundMiddleware)
