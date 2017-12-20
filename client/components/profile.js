@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { api } from '../utils/api'
 import { BuildProfileRepo } from './subcomponents/result_repo_search'
+import { Loading } from './loading'
 
 export class Profile extends Component {
     constructor(props) {
@@ -30,6 +31,9 @@ export class Profile extends Component {
                             })
                     }
                 }
+                else {
+                    this.setState({ favorites: [] })
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -40,9 +44,12 @@ export class Profile extends Component {
     render() {
         return (
             <div style={{ width: '100%' }}>
-                <div style={{ marginTop: '62px' }}>
-                    {this.state.favorites && this.state.favorites.map((elem, i) => <BuildProfileRepo key={i} props={elem.data.repository} />)}
-                </div>
+                {!this.state.favorites ? <Loading speed={500} text={'Loading'} /> :
+                    <div style={{ marginTop: '22px' }}>
+                        {this.state.favorites && this.state.favorites.length === 0 ? <div style={{ textAlign: 'center', fontSize: '35px' }}><p>There are no favorites.</p></div> : null}
+                        {this.state.favorites && this.state.favorites.map((elem, i) => <BuildProfileRepo key={i} props={elem.data.repository} />)}
+                    </div>
+                }
             </div>
         )
     }
