@@ -127,7 +127,7 @@ export class Repo extends Component {
             <div>
               {repository && <SingleRepo favText={favText} handleFavourite={this.handleFavourite} repo={repository} medium={medium} />}
               {medium && <RepoPosts medium={medium} />}
-              <Loading speed={500} text='Loading' />
+             {!repository && <Loading speed={500} text='Loading' />}
             </div>
 
           }
