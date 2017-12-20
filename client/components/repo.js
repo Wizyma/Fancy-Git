@@ -67,7 +67,6 @@ export class Repo extends Component {
         }
         
         if(res.data.find((e, i) => e.RepoName === this.state.repo.name && e.RepoUser === this.state.repo.login)){
-          console.log('wtf frereeeeeeeeeeeeeeeeeeeeee', this.state)
           return this.setState({
 
             destroy: false,

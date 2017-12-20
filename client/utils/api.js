@@ -342,7 +342,6 @@ class GitAPI {
     }
 
     getUserFav = ({ userid }) => {
-      console.log(userid)
       return axios.get(`http://localhost:1339/getuser`, {
         params: {
           id: userid

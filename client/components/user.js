@@ -32,7 +32,6 @@ export class User extends Component{
 
     render(){ 
         const { datas, switchrepos } = this.state
-        console.log(datas)
         return(
             <RepoDiv>
                 {datas  && <BuildResultUsersInfo user={datas} />} 

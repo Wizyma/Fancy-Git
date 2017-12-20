@@ -26,7 +26,6 @@ export class Nav extends Component {
 
     render(){
         const { isLogged } = this.state
-        console.log(isLogged)
         return(
             <Ul className="nav">
             <Li>

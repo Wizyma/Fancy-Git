@@ -15,11 +15,9 @@ export class FavoritesRoutes extends BaseController {
   ]
   
   private getUserPosts = (req: Request | any, res: Response) => {
-    console.log(req.isAuthenticated())
     const { id } = req.query
     User.models.Favorites.findAll({ where : { UserID: id } })
         .then((result: any) => {
-          console.log(result)
           if (result.length >= 1) {
             return res.json(result)
           }
@@ -35,7 +33,6 @@ export class FavoritesRoutes extends BaseController {
           if (!created) {
             return User.models.Favorites.destroy({ where : { UserID: id, RepoName: repo, RepoUser: login } })
                 .then((a: any) => {
-                  console.log('User deleted')
                   res.json({ success: true, destroy: true })
                 })
           }
