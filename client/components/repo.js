@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { RepoDiv } from '../styles/repo_styles'
 import { BackButton } from '../styles/globals'
 import { api } from '../utils/api'
-import { SingleRepo } from './subcomponents/clicked_repo'
+import { SingleRepo, RepoPosts } from './subcomponents/clicked_repo'
 import { Loading } from './loading'
-import { RepoPosts } from './subcomponents/clicked_repo'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag';
 
 
 
-export class Repo extends Component {
+class Repo extends Component {
   constructor(props) {
     super(props)
 
@@ -28,8 +29,9 @@ export class Repo extends Component {
   }
 
   componentDidMount() {
-    const { login, name, destroy } = this.state.repo
-
+    const { destroy } = this.state.repo
+    console.log('Mounted')
+    /*
     api.getClickedRepository(login, name)
       .then(res => {
         if (res.data.repository !== null) {
@@ -51,9 +53,11 @@ export class Repo extends Component {
         }
       })
       .catch(err => console.log(err))
+      */
+  }
 
-    {/* api.getMediumPosts('react')
-    .then(datas => console.log(datas)) */}
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps, 'next')
     const id = localStorage.getItem('user')
     const isLogged = localStorage.getItem('logged')
     if (isLogged === 'true') {
@@ -116,15 +120,16 @@ export class Repo extends Component {
 
   render() {
     const { repository, repo, medium, error, favText, destroy } = this.state
+    const { CLICKED_QUERY } = this.props
     return (
       <RepoDiv>
         <BackButton onClick={this.goBack}>Back</BackButton>
         <div style={{ width: '100%' }}>
           {error === "pas de repo" ? <h1>Error : Repo not found</h1> :
             <div>
-              {repository && <SingleRepo favText={favText} handleFavourite={this.handleFavourite} repo={repository} medium={medium} />}
+              {CLICKED_QUERY.repository && <SingleRepo favText={favText} handleFavourite={this.handleFavourite} repo={CLICKED_QUERY.repository} medium={medium} />}
               {medium && <RepoPosts medium={medium} />}
-             {!repository && <Loading speed={500} text='Loading' />}
+             {!CLICKED_QUERY.repository && <Loading speed={500} text='Loading' />}
             </div>
 
           }
@@ -134,3 +139,87 @@ export class Repo extends Component {
     )
   }
 }
+
+const CLICKED_REPO_QUERY = gql`
+  query repository($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
+      createdAt
+      name
+      owner {
+        avatarUrl
+        login
+      }
+      stargazers(first: 1) {
+        totalCount
+      }
+      hasIssuesEnabled
+      description
+      defaultBranchRef {
+        name
+      }
+      collaborators(first: 50) {
+        nodes {
+          login
+          avatarUrl
+        }
+      }
+      isFork
+      projects(first: 10) {
+        totalCount
+        nodes {
+          name
+          state
+          creator {
+            login
+          }
+        }
+      }
+      viewerCanSubscribe
+      viewerHasStarred
+      id
+      repositoryTopics(first: 50) {
+        nodes {
+          topic {
+            name
+          }
+          url
+        }
+      }
+      licenseInfo {
+        name
+      }
+      hasWikiEnabled
+      primaryLanguage {
+        name
+        color
+      }
+      issues(first: 50, states: OPEN) {
+        nodes {
+          author {
+            avatarUrl
+            login
+          }
+          createdAt
+          id
+          assignees(first: 10) {
+            nodes {
+              login
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export default graphql(CLICKED_REPO_QUERY, {
+  name: 'CLICKED_QUERY',
+  options: ({ location }) => {
+    const owner = location.state.login
+    const name = location.state.name
+    return {
+      errorPolicy: 'ignore',
+      variables: { owner, name }
+    }
+  },
+})(Repo)

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { Nav } from './nav'
-import { Popular } from './popular'
-import { Repo } from './repo'
+import Popular from './popular'
+import Repo from './repo'
 import { MainDiv } from '../styles/globals'
 import { Search } from './search'
 import { User } from './user'
@@ -27,7 +27,7 @@ export class App extends React.Component {
   render() {
     return(
       
-    <Router>
+    <div>
         <MainDiv className="container">
         
             <Nav />
@@ -42,7 +42,7 @@ export class App extends React.Component {
                 <Route render={() => <p>Not found</p>} />
             </Switch>
         </MainDiv>
-    </Router>
+    </div>
     )
   }
 }

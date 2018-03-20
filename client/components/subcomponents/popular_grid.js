@@ -6,11 +6,10 @@ const emoji = require('node-emoji')
 /**
  * construct the view for the github data fetched
  * 
- * @param {Build['fetched']} fetched array of object containing github info
+ * @param {Build['data']} data array of object containing github info
  * @returns JSX element
  */
-export const BuildPopular = (fetched) => {
-  const data = fetched.data
+export const BuildPopular = ({ data, url }) => {
   return(
       <PopularDiv>
           <PopularTitle>Most popular repos on GitHub</PopularTitle>
@@ -37,7 +36,7 @@ export const BuildPopular = (fetched) => {
                               <span>Type : {elem.owner.__typename}</span>
                           </div>
                       </div>
-                      <PopularButton style={{ marginLeft: '-150px' }} to={{ exact: true, pathname: `${fetched.url}repo`, state:  { login: elem.owner.login, name: elem.name } }}> 
+                      <PopularButton style={{ marginLeft: '-150px' }} to={{ exact: true, pathname: `${ url }repo`, state:  { login: elem.owner.login, name: elem.name } }}> 
                         More ...
                       </PopularButton>
                     </PopularContainer>

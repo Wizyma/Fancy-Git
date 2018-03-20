@@ -1,36 +1,55 @@
 import React, { Component } from 'react'
-import { api } from '../utils/api'
 import { Loading } from './loading'
 import { BuildPopular } from './subcomponents/popular_grid'
 import { SearchButton } from '../styles/globals'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
-export class Popular extends Component {
-  constructor(props) {
-    super(props)
+const Popular = ({ SEARCH_QUERY, url }) => (
+    SEARCH_QUERY.search ? 
+    <div style={{ width: '100%' }}>
+          <BuildPopular data={ SEARCH_QUERY.search.nodes } url={ url }/> 
+    </div> :  
+    <Loading speed={500} text={'Loading'}/>
+)
 
-    this.state = {
-      data: null,
+
+const POPULAR_REPO_QUERY = gql`{
+search(first: 12, type: REPOSITORY, query: "stars:>15000") {
+  nodes {
+      ... on Repository {
+        name
+        forks {
+          totalCount
+        }
+        watchers {
+          totalCount
+        }
+        stargazers {
+          totalCount
+        }
+        languages(first: 1, orderBy: {field: SIZE, direction: DESC}) {
+          nodes {
+            name
+          }
+        }
+        description
+        owner {
+          avatarUrl
+          __typename
+          login
+        }
+        hasIssuesEnabled
+        issues {
+          totalCount
+        }
+      }
     }
   }
-
-  componentDidMount() {
-    api.getPopularRepositories()
-      .then((res) => {
-        this.setState({ data: res.data.search.nodes })
-      })
-  }
-
-  searchItems = (event) => {
-
-  }
-
-  render() {
-    return (
-      this.state.data ? 
-        <div style={{ width: '100%' }}>
-              <BuildPopular data={this.state.data} url={ this.props.url }/> 
-        </div> :  
-        <Loading speed={500} text={'Loading'}/>
-    )
-  }
 }
+    
+`
+
+export default graphql(POPULAR_REPO_QUERY, {
+  name: 'SEARCH_QUERY',
+})(Popular)
