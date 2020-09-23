@@ -57,7 +57,7 @@
     "@types/zen-observable": "^0.5.3",
     "apollo-client": "^2.0.1",
     "apollo-client-preset": "^1.0.8",
-    "apollo-fetch": "^0.6.0",
+    "apollo-fetch": "^0.7.0",
     "apollo-link": "^1.0.0",
     "apollo-link-core": "^0.5.4",
     "apollo-link-http": "^1.0.0",
@@ -91,7 +91,7 @@
     "sequelize": "^4.22.1",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
-    "styled-components": "^2.2.2",
+    "styled-components": "^4.0.0",
     "subscriptions-transport-ws": "^0.9.6",
     "tslint-config-airbnb": "^5.3.0",
     "zen-observable": "^0.6.0"
