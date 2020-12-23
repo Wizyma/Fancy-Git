@@ -63,7 +63,7 @@
     "apollo-link-http": "^1.0.0",
     "apollo-link-ws": "^1.0.7",
     "apollo-server-express": "^1.2.0",
-    "axios": "^0.17.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
     "es6-promise": "^4.1.1",
