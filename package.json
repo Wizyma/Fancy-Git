@@ -80,7 +80,7 @@
     "mysql": "^2.15.0",
     "mysql2": "^1.4.2",
     "node-emoji": "^1.8.1",
-    "passport": "^0.4.0",
+    "passport": "^0.6.0",
     "passport-github2": "^0.1.11",
     "react": "^16.0.0",
     "react-apollo": "^2.0.4",
